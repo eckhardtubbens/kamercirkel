@@ -11,12 +11,12 @@
     >
 
     <title>
-        Kamercirkel — Open podium voor kamermuziek
+        {{ site.name }} — {{ site.tagline }}
     </title>
 
     <meta
         name="description"
-        content="Kamercirkel — Open podium voor kamermuziek in Amsterdam."
+        content="{{ site.name }} — {{ site.tagline }} in {{ site.city }}."
     >
 
     <link
@@ -36,11 +36,11 @@
         href="/"
         class="logo"
     >
-        Kamercirkel
+        {{ site.name }}
     </a>
 
     <span class="edition">
-        1 9 2026
+        {{ event.date_formatted.short }}
     </span>
 
 </header>
@@ -56,7 +56,7 @@
         <div class="hero-top">
 
             <p class="eyebrow">
-                Amsterdam · Zaal 100
+                {{ site.city }} · {{ event.location.name }}
             </p>
 
         </div>
@@ -77,15 +77,15 @@
             <div class="event-date">
 
                 <span class="date-day">
-                    1
+                    {{ event.date_formatted.day }}
                 </span>
 
                 <span class="date-month">
-                    SEPTEMBER
+                    {{ event.date_formatted.month }}
                 </span>
 
                 <span class="date-year">
-                    2026
+                    {{ event.date_formatted.year }}
                 </span>
 
             </div>
@@ -96,14 +96,14 @@
                 <div>
                     <span class="label">Waar</span>
                     <strong>
-                        Zaal 100
+                        {{ event.location.name }}
                     </strong>
                 </div>
 
                 <div>
                     <span class="label">Entree</span>
                     <strong>
-                        € 5
+                        € {{ event.price }}
                     </strong>
                 </div>
 
@@ -136,21 +136,18 @@
 
 
             <p class="large">
-                Kamercirkel is een open podium voor klassieke kamermuziek. Voor ensembles die hun muziek graag voor publiek spelen, in welke fase van hun muzikale leven dan ook.
-
+                {{ event.text.introduction }}
             </p>
 
 
             <div class="text-columns">
 
                 <p>
-                    Heb je een ensemble en wil je graag spelen? Neem je muziek mee. Ook ensembles met piano zijn welkom: in de grote zaal staat een vleugel.
-
+                    {{ event.text.musicians }}
                 </p>
 
                 <p>
-                    Nog geen ensemble? Kom luisteren en ontmoet andere musici. Misschien ontstaat er ter plekke wel een nieuw ensemble. Luisteraars zijn natuurlijk ook welkom.
-
+                    {{ event.text.listeners }}
                 </p>
 
             </div>
@@ -186,7 +183,7 @@
                     </span>
 
                     <strong>
-                        Kom naar Zaal 100
+                        Kom naar {{ event.location.name }}
                     </strong>
 
                 </div>
@@ -199,7 +196,7 @@
                     </span>
 
                     <strong>
-                        Ter plekke inschrijven
+                        {{ event.playing.registration }}
                     </strong>
 
                 </div>
@@ -221,7 +218,7 @@
 
 
             <p class="playing-time">
-                De beschikbare speeltijd hangt af van de animo.
+                {{ event.playing.time }}
             </p>
 
         </div>
@@ -247,23 +244,23 @@
 
 
             <h2>
-                Zaal 100
+                {{ event.location.name }}
             </h2>
 
 
             <p class="address">
 
-                De Wittenstraat 100<br>
+                {{ event.location.address }}<br>
 
-                1052 BA
-                Amsterdam
+                {{ event.location.postal_code }}
+                {{ event.location.city }}
 
             </p>
 
 
             <a
                 class="location-link"
-                href="https://www.google.com/maps/search/?api=1&amp;query=De+Wittenstraat+100%2C+1052+BA+Amsterdam"
+                href="{{ event.location.map_url }}"
                 target="_blank"
                 rel="noopener noreferrer"
             >
@@ -285,31 +282,40 @@
 <footer class="footer">
 
     <div class="footer-name">
-        Kamercirkel
+        {{ site.name }}
     </div>
 
 
     <div class="footer-links">
 
-        
+        {% if social.instagram %}
             <a
-                href="https://instagram.com/..."
+                href="{{ social.instagram }}"
                 target="_blank"
                 rel="noopener noreferrer"
             >
                 Instagram
                 <span>↗</span>
             </a>
-        
+        {% endif %}
 
 
-        
+        {% if social.whatsapp %}
+            <a
+                href="{{ social.whatsapp }}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                WhatsApp
+                <span>↗</span>
+            </a>
+        {% endif %}
 
     </div>
 
 
     <div class="footer-tagline">
-        Open podium voor kamermuziek · Amsterdam
+        {{ site.tagline }} · {{ site.city }}
     </div>
 
 </footer>

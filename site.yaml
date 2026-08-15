@@ -1,0 +1,40 @@
+site:
+  name: "Kamercirkel"
+  tagline: "Open podium voor kamermuziek"
+  city: "Amsterdam"
+
+event:
+  title: "Open podium voor kamermuziek"
+  date: "2026-09-01"
+
+  location:
+    name: "Zaal 100"
+    address: "De Wittenstraat 100"
+    postal_code: "1052 BA"
+    city: "Amsterdam"
+    map_url: "https://www.google.com/maps/search/?api=1&query=De+Wittenstraat+100%2C+1052+BA+Amsterdam"
+
+  price: 5
+
+  text:
+    introduction: >
+      Kamercirkel is een open podium voor klassieke kamermuziek.
+      Voor ensembles die hun muziek graag voor publiek spelen,
+      in welke fase van hun muzikale leven dan ook.
+  
+    musicians: >
+      Heb je een ensemble en wil je graag spelen?
+      Neem je muziek mee. Ook ensembles met piano zijn welkom:
+      in de grote zaal staat een vleugel.
+  
+    listeners: >
+      Nog geen ensemble? Kom luisteren en ontmoet andere musici.
+      Misschien ontstaat er ter plekke wel een nieuw ensemble.
+      Luisteraars zijn natuurlijk ook welkom.
+  playing:
+    registration: "Ter plekke inschrijven"
+    time: "De beschikbare speeltijd hangt af van de animo."
+
+social:
+  instagram: "https://instagram.com/..."
+  whatsapp: ""
