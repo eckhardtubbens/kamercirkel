@@ -11,13 +11,112 @@
     >
 
     <title>
-        {{ site.name }} — {{ site.tagline }}
+        {{ site.name }} — {{ site.tagline }} in {{ site.city }}
     </title>
 
     <meta
         name="description"
-        content="{{ site.name }} — {{ site.tagline }} in {{ site.city }}."
+        content="{{ site.description }}"
     >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    {% if site.canonical_url %}
+    <link
+        rel="canonical"
+        href="{{ site.canonical_url }}/"
+    >
+    {% endif %}
+
+
+    <!-- Open Graph -->
+
+    <meta
+        property="og:type"
+        content="event"
+    >
+
+    <meta
+        property="og:title"
+        content="{{ event.title }}"
+    >
+
+    <meta
+        property="og:description"
+        content="{{ site.description }}"
+    >
+
+    {% if site.canonical_url %}
+    <meta
+        property="og:url"
+        content="{{ site.canonical_url }}/"
+    >
+    {% endif %}
+
+    <meta
+        property="og:locale"
+        content="nl_NL"
+    >
+
+
+    <!-- Structured data -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Event",
+
+        "name": {{ event.title | tojson }},
+
+        "description": {{ event.text.introduction | tojson }},
+
+        "startDate": "{{ event.start_datetime }}",
+        "endDate": "{{ event.end_datetime }}",
+
+        "eventStatus": "https://schema.org/EventScheduled",
+
+        "location": {
+            "@type": "Place",
+            "name": {{ event.location.name | tojson }},
+
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": {{ event.location.address | tojson }},
+                "postalCode": {{ event.location.postal_code | tojson }},
+                "addressLocality": {{ event.location.city | tojson }},
+                "addressCountry": "NL"
+            }
+        },
+
+        "offers": {
+            "@type": "Offer",
+            "price": {{ event.price }},
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock"
+        },
+
+        "organizer": {
+            "@type": "Organization",
+            "name": {{ site.name | tojson }}
+            {% if site.canonical_url %},
+            "url": {{ site.canonical_url | tojson }}
+            {% endif %}
+        }
+
+        {% if social.instagram %}
+        ,
+        "sameAs": [
+            {{ social.instagram | tojson }}
+        ]
+        {% endif %}
+    }
+    </script>
+
+
+    <!-- Stylesheet -->
 
     <link
         rel="stylesheet"
@@ -95,13 +194,16 @@
 
                 <div>
                     <span class="label">Waar</span>
+
                     <strong>
                         {{ event.location.name }}
                     </strong>
                 </div>
 
+
                 <div>
                     <span class="label">Entree</span>
+
                     <strong>
                         € {{ event.price }}
                     </strong>
@@ -127,11 +229,12 @@
         <div class="about-content">
 
             <p class="eyebrow">
-                Voor musici
+                Wat is Kamercirkel?
             </p>
 
             <h2>
-                Speel je mee?
+                Een plek<br>
+                om te spelen.
             </h2>
 
 
@@ -152,13 +255,18 @@
 
             </div>
 
+
+            <p class="concept">
+                {{ event.concept }}
+            </p>
+
         </div>
 
     </section>
 
 
 
-    <!-- HOW IT WORKS -->
+    <!-- PLAY -->
 
     <section class="play">
 
@@ -170,8 +278,29 @@
         <div class="play-content">
 
             <p class="eyebrow">
-                Hoe het werkt
+                Speel je mee?
             </p>
+
+
+            <h2>
+                Neem je muziek mee.
+            </h2>
+
+
+            <p class="play-introduction">
+                {{ event.registration.text }}
+            </p>
+
+
+            <a
+                class="registration-link"
+                href="{{ event.registration.url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                {{ event.registration.button }}
+                <span>↗</span>
+            </a>
 
 
             <div class="rules">
@@ -183,7 +312,7 @@
                     </span>
 
                     <strong>
-                        Kom naar {{ event.location.name }}
+                        Schrijf je vooraf in
                     </strong>
 
                 </div>
@@ -196,7 +325,7 @@
                     </span>
 
                     <strong>
-                        {{ event.playing.registration }}
+                        Vermeld je ensemble en muziek
                     </strong>
 
                 </div>
@@ -209,7 +338,7 @@
                     </span>
 
                     <strong>
-                        Speel voor elkaar
+                        Ontvang vooraf bericht over je speeltijd
                     </strong>
 
                 </div>
@@ -289,6 +418,7 @@
     <div class="footer-links">
 
         {% if social.instagram %}
+
             <a
                 href="{{ social.instagram }}"
                 target="_blank"
@@ -297,10 +427,12 @@
                 Instagram
                 <span>↗</span>
             </a>
+
         {% endif %}
 
 
         {% if social.whatsapp %}
+
             <a
                 href="{{ social.whatsapp }}"
                 target="_blank"
@@ -309,6 +441,7 @@
                 WhatsApp
                 <span>↗</span>
             </a>
+
         {% endif %}
 
     </div>

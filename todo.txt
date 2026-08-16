@@ -1,0 +1,1 @@
+- Voor SEO is het vervolgens verstandig om, zodra je domein live staat, Google Search Console te koppelen en de sitemap in te dienen; Google raadt dat expliciet aan om nieuwe/gewijzigde pagina's te helpen ontdekken.

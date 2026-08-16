@@ -3,9 +3,19 @@ site:
   tagline: "Open podium voor kamermuziek"
   city: "Amsterdam"
 
+  description: >
+    Kamercirkel is een open podium voor klassieke kamermuziek in Amsterdam.
+    Een plek voor ensembles, professionele musici, conservatoriumstudenten
+    en gevorderde amateurs om kamermuziek te spelen, te luisteren en andere
+    musici te ontmoeten.
+
+  url: ""
+
 event:
-  title: "Open podium voor kamermuziek"
+  title: "Kamercirkel — Open podium voor klassieke kamermuziek"
   date: "2026-09-01"
+  start_time: "19:30"
+  end_time: "23:00"
 
   location:
     name: "Zaal 100"
@@ -18,22 +28,49 @@ event:
 
   text:
     introduction: >
-      Kamercirkel is een open podium voor klassieke kamermuziek.
-      Voor ensembles die hun muziek graag voor publiek spelen,
-      in welke fase van hun muzikale leven dan ook.
-  
+      Kamercirkel is een open podium voor klassieke kamermuziek in Amsterdam.
+      Een plek waar musici hun kamermuziek kunnen spelen voor een aandachtig
+      publiek, zonder dat daar een formeel concert of maandenlange voorbereiding
+      voor nodig is.
+
     musicians: >
-      Heb je een ensemble en wil je graag spelen?
-      Neem je muziek mee. Ook ensembles met piano zijn welkom:
-      in de grote zaal staat een vleugel.
-  
+      Het podium is er voor ensembles die graag spelen: van jonge musici en
+      gevorderde amateurs tot conservatoriumstudenten en ervaren professionele
+      musici. Juist de ontmoeting tussen verschillende muzikale achtergronden
+      maakt de avond interessant.
+
+    playing: >
+      Heb je een bestaand ensemble en wil je een stuk spelen? Schrijf je vooraf
+      in en laat ons weten wie jullie zijn en wat jullie willen spelen.
+      Ook ensembles met piano zijn welkom: in de grote zaal staat een vleugel.
+      Op basis van de inschrijvingen maken we een voorlopig programma.
+
     listeners: >
       Nog geen ensemble? Kom luisteren en ontmoet andere musici.
-      Misschien ontstaat er ter plekke wel een nieuw ensemble.
+      Misschien ontstaat er een nieuwe muzikale samenwerking.
       Luisteraars zijn natuurlijk ook welkom.
+
+  concept: >
+    Kamercirkel is kleinschalig, informeel en gericht op de muziek.
+    Geen competitie en geen jury, maar goede kamermuziek, een aandachtig
+    publiek en ruimte om elkaar te ontmoeten.
+
+  registration:
+    title: "Speel je mee?"
+
+    text: >
+      Wil je spelen? Schrijf je vooraf in. Vermeld je ensemble, de musici,
+      het instrumentarium en het werk dat je wilt spelen. Op basis van de
+      inschrijvingen maken we het programma. Je ontvangt vooraf bericht
+      over je speeltijd.
+
+    button: "Inschrijven om te spelen"
+
+    url: "https://docs.google.com/forms/d/e/1FAIpQLScF7BjYv0ZZ7OWXcv6IKM0kbrwD1I_tq4zoYv1nE0_ulK1Kbw/viewform?usp=publish-editor"
+
   playing:
-    registration: "Ter plekke inschrijven"
-    time: "De beschikbare speeltijd hangt af van de animo."
+    registration: "Vooraf inschrijven"
+    time: "De beschikbare speeltijd hangt af van het aantal inschrijvingen."
 
 social:
   instagram: "https://instagram.com/..."

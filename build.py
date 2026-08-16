@@ -1,6 +1,6 @@
 from pathlib import Path
 from datetime import date
-import calendar
+from urllib.parse import urljoin
 
 import yaml
 from jinja2 import Environment, FileSystemLoader
@@ -14,7 +14,10 @@ ROOT = Path(__file__).parent
 
 SITE_FILE = ROOT / "site.yaml"
 TEMPLATE_DIR = ROOT / "templates"
+
 OUTPUT_FILE = ROOT / "index.html"
+ROBOTS_FILE = ROOT / "robots.txt"
+SITEMAP_FILE = ROOT / "sitemap.xml"
 
 
 # --------------------------------------------------
@@ -45,9 +48,13 @@ def format_date(date_value):
         2026-09-01
 
     becomes:
+
         full:       1 september 2026
         uppercase:  1 SEPTEMBER 2026
-        short:      1.9.2026
+        short:      1 9 2026
+        day:        1
+        month:      SEPTEMBER
+        year:       2026
     """
 
     if isinstance(date_value, date):
@@ -85,9 +92,21 @@ site["event"]["date_formatted"] = format_date(
     site["event"]["date"]
 )
 
+site["event"]["end_datetime"] = (
+    f"{site['event']['date']}T{site['event']['end_time']}:00"
+)
 
 # --------------------------------------------------
-# Load Jinja template
+# Derived site information
+# --------------------------------------------------
+
+site_url = site["site"].get("url", "").rstrip("/")
+
+site["site"]["canonical_url"] = site_url
+
+
+# --------------------------------------------------
+# Jinja environment
 # --------------------------------------------------
 
 environment = Environment(
@@ -99,7 +118,7 @@ template = environment.get_template("index.html")
 
 
 # --------------------------------------------------
-# Generate website
+# Generate HTML
 # --------------------------------------------------
 
 html = template.render(**site)
@@ -108,4 +127,57 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as file:
     file.write(html)
 
 
-print(f"Website gegenereerd: {OUTPUT_FILE}")
+# --------------------------------------------------
+# Generate robots.txt
+# --------------------------------------------------
+
+if site_url:
+
+    robots = f"""User-agent: *
+Allow: /
+
+Sitemap: {urljoin(site_url + "/", "sitemap.xml")}
+"""
+
+else:
+
+    robots = """User-agent: *
+Allow: /
+"""
+
+
+with open(ROBOTS_FILE, "w", encoding="utf-8") as file:
+    file.write(robots)
+
+
+# --------------------------------------------------
+# Generate sitemap.xml
+# --------------------------------------------------
+
+if site_url:
+
+    sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>{site_url}/</loc>
+    </url>
+</urlset>
+"""
+
+    with open(SITEMAP_FILE, "w", encoding="utf-8") as file:
+        file.write(sitemap)
+
+
+# --------------------------------------------------
+# Done
+# --------------------------------------------------
+
+print("Website gegenereerd.")
+print(f"HTML:      {OUTPUT_FILE}")
+
+if site_url:
+    print(f"Robots:    {ROBOTS_FILE}")
+    print(f"Sitemap:   {SITEMAP_FILE}")
+else:
+    print("Robots.txt gegenereerd.")
+    print("Sitemap wordt pas gegenereerd zodra site.url is ingevuld.")
