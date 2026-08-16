@@ -586,6 +586,7 @@ h2 {
         min-height: 88vh;
 
         padding-top: 15vw;
+        padding-right: 5vw;
         padding-bottom: 10vw;
     }
 
@@ -599,6 +600,8 @@ h2 {
             );
 
         line-height: 0.85;
+
+        padding-right: 5vw;
     }
 
     .hero-bottom {
