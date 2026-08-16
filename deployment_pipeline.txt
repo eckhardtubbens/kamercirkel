@@ -1,0 +1,15 @@
+site.yaml aanpassen
+       ↓
+git add .
+       ↓
+git commit -m "..."
+       ↓
+git push
+       ↓
+GitHub Actions
+       ↓
+build.py
+       ↓
+GitHub Pages
+       ↓
+live website
