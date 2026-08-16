@@ -11,12 +11,13 @@
     >
 
     <title>
-        {{ site.name }} — {{ site.tagline }} in {{ site.city }}
+        Kamercirkel — Open podium voor kamermuziek in Amsterdam
     </title>
 
     <meta
         name="description"
-        content="{{ site.description }}"
+        content="Kamercirkel is een open podium voor klassieke kamermuziek in Amsterdam. Een plek voor ensembles, professionele musici, conservatoriumstudenten en gevorderde amateurs om kamermuziek te spelen, te luisteren en andere musici te ontmoeten.
+"
     >
 
     <meta
@@ -24,12 +25,12 @@
         content="index, follow"
     >
 
-    {% if site.canonical_url %}
+    
     <link
         rel="canonical"
-        href="{{ site.canonical_url }}/"
+        href="https://eckhardtubbens.github.io/kamercirkel/"
     >
-    {% endif %}
+    
 
 
     <!-- Open Graph -->
@@ -41,20 +42,21 @@
 
     <meta
         property="og:title"
-        content="{{ event.title }}"
+        content="Kamercirkel — Open podium voor klassieke kamermuziek"
     >
 
     <meta
         property="og:description"
-        content="{{ site.description }}"
+        content="Kamercirkel is een open podium voor klassieke kamermuziek in Amsterdam. Een plek voor ensembles, professionele musici, conservatoriumstudenten en gevorderde amateurs om kamermuziek te spelen, te luisteren en andere musici te ontmoeten.
+"
     >
 
-    {% if site.canonical_url %}
+    
     <meta
         property="og:url"
-        content="{{ site.canonical_url }}/"
+        content="https://eckhardtubbens.github.io/kamercirkel/"
     >
-    {% endif %}
+    
 
     <meta
         property="og:locale"
@@ -69,49 +71,49 @@
         "@context": "https://schema.org",
         "@type": "Event",
 
-        "name": {{ event.title | tojson }},
+        "name": "Kamercirkel \u2014 Open podium voor klassieke kamermuziek",
 
-        "description": {{ event.text.introduction | tojson }},
+        "description": "Kamercirkel is een open podium voor klassieke kamermuziek in Amsterdam. Een plek waar musici hun kamermuziek kunnen spelen voor een aandachtig publiek, zonder dat daar een formeel concert of maandenlange voorbereiding voor nodig is.\n",
 
-        "startDate": "{{ event.start_datetime }}",
-        "endDate": "{{ event.end_datetime }}",
+        "startDate": "",
+        "endDate": "2026-09-01T23:00:00",
 
         "eventStatus": "https://schema.org/EventScheduled",
 
         "location": {
             "@type": "Place",
-            "name": {{ event.location.name | tojson }},
+            "name": "Zaal 100",
 
             "address": {
                 "@type": "PostalAddress",
-                "streetAddress": {{ event.location.address | tojson }},
-                "postalCode": {{ event.location.postal_code | tojson }},
-                "addressLocality": {{ event.location.city | tojson }},
+                "streetAddress": "De Wittenstraat 100",
+                "postalCode": "1052 BA",
+                "addressLocality": "Amsterdam",
                 "addressCountry": "NL"
             }
         },
 
         "offers": {
             "@type": "Offer",
-            "price": {{ event.price }},
+            "price": 5,
             "priceCurrency": "EUR",
             "availability": "https://schema.org/InStock"
         },
 
         "organizer": {
             "@type": "Organization",
-            "name": {{ site.name | tojson }}
-            {% if site.canonical_url %},
-            "url": {{ site.canonical_url | tojson }}
-            {% endif %}
+            "name": "Kamercirkel"
+            ,
+            "url": "https://eckhardtubbens.github.io/kamercirkel"
+            
         }
 
-        {% if social.instagram %}
+        
         ,
         "sameAs": [
-            {{ social.instagram | tojson }}
+            "https://instagram.com/..."
         ]
-        {% endif %}
+        
     }
     </script>
 
@@ -135,11 +137,11 @@
         href="/"
         class="logo"
     >
-        {{ site.name }}
+        Kamercirkel
     </a>
 
     <span class="edition">
-        {{ event.date_formatted.short }}
+        1 9 2026
     </span>
 
 </header>
@@ -155,7 +157,7 @@
         <div class="hero-top">
 
             <p class="eyebrow">
-                {{ site.city }} · {{ event.location.name }}
+                Amsterdam · Zaal 100
             </p>
 
         </div>
@@ -176,15 +178,15 @@
             <div class="event-date">
 
                 <span class="date-day">
-                    {{ event.date_formatted.day }}
+                    1
                 </span>
 
                 <span class="date-month">
-                    {{ event.date_formatted.month }}
+                    SEPTEMBER
                 </span>
 
                 <span class="date-year">
-                    {{ event.date_formatted.year }}
+                    2026
                 </span>
 
             </div>
@@ -196,7 +198,7 @@
                     <span class="label">Waar</span>
 
                     <strong>
-                        {{ event.location.name }}
+                        Zaal 100
                     </strong>
                 </div>
 
@@ -205,7 +207,7 @@
                     <span class="label">Tijd</span>
 
                     <strong>
-                        {{ event.start_time }} – {{ event.end_time }}
+                        19:30 – 23:00
                     </strong>
                 </div>
 
@@ -214,7 +216,7 @@
                     <span class="label">Entree</span>
 
                     <strong>
-                        € {{ event.price }}
+                        € 5
                     </strong>
                 </div>
 
@@ -248,25 +250,29 @@
 
 
             <p class="large">
-                {{ event.text.introduction }}
+                Kamercirkel is een open podium voor klassieke kamermuziek in Amsterdam. Een plek waar musici hun kamermuziek kunnen spelen voor een aandachtig publiek, zonder dat daar een formeel concert of maandenlange voorbereiding voor nodig is.
+
             </p>
 
 
             <div class="text-columns">
 
                 <p>
-                    {{ event.text.musicians }}
+                    Het podium is er voor ensembles die graag spelen: van jonge musici en gevorderde amateurs tot conservatoriumstudenten en ervaren professionele musici. Juist de ontmoeting tussen verschillende muzikale achtergronden maakt de avond interessant.
+
                 </p>
 
                 <p>
-                    {{ event.text.listeners }}
+                    Nog geen ensemble? Kom luisteren en ontmoet andere musici. Misschien ontstaat er een nieuwe muzikale samenwerking. Luisteraars zijn natuurlijk ook welkom.
+
                 </p>
 
             </div>
 
 
             <p class="concept">
-                {{ event.concept }}
+                Kamercirkel is kleinschalig, informeel en gericht op de muziek. Geen competitie en geen jury, maar goede kamermuziek, een aandachtig publiek en ruimte om elkaar te ontmoeten.
+
             </p>
 
         </div>
@@ -297,17 +303,18 @@
 
 
             <p class="play-introduction">
-                {{ event.registration.text }}
+                Wil je spelen? Schrijf je vooraf in. Vermeld je ensemble, de musici, het instrumentarium en het werk dat je wilt spelen. Op basis van de inschrijvingen maken we het programma. Je ontvangt vooraf bericht over je speeltijd.
+
             </p>
 
 
             <a
                 class="registration-link"
-                href="{{ event.registration.url }}"
+                href="https://docs.google.com/forms/d/e/1FAIpQLScF7BjYv0ZZ7OWXcv6IKM0kbrwD1I_tq4zoYv1nE0_ulK1Kbw/viewform?usp=publish-editor"
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                {{ event.registration.button }}
+                Inschrijven om te spelen
                 <span>↗</span>
             </a>
 
@@ -356,7 +363,7 @@
 
 
             <p class="playing-time">
-                {{ event.playing.time }}
+                De beschikbare speeltijd hangt af van het aantal inschrijvingen.
             </p>
 
         </div>
@@ -382,23 +389,23 @@
 
 
             <h2>
-                {{ event.location.name }}
+                Zaal 100
             </h2>
 
 
             <p class="address">
 
-                {{ event.location.address }}<br>
+                De Wittenstraat 100<br>
 
-                {{ event.location.postal_code }}
-                {{ event.location.city }}
+                1052 BA
+                Amsterdam
 
             </p>
 
 
             <a
                 class="location-link"
-                href="{{ event.location.map_url }}"
+                href="https://www.google.com/maps/search/?api=1&amp;query=De+Wittenstraat+100%2C+1052+BA+Amsterdam"
                 target="_blank"
                 rel="noopener noreferrer"
             >
@@ -420,16 +427,16 @@
 <footer class="footer">
 
     <div class="footer-name">
-        {{ site.name }}
+        Kamercirkel
     </div>
 
 
     <div class="footer-links">
 
-        {% if social.instagram %}
+        
 
             <a
-                href="{{ social.instagram }}"
+                href="https://instagram.com/..."
                 target="_blank"
                 rel="noopener noreferrer"
             >
@@ -437,27 +444,16 @@
                 <span>↗</span>
             </a>
 
-        {% endif %}
+        
 
 
-        {% if social.whatsapp %}
-
-            <a
-                href="{{ social.whatsapp }}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                WhatsApp
-                <span>↗</span>
-            </a>
-
-        {% endif %}
+        
 
     </div>
 
 
     <div class="footer-tagline">
-        {{ site.tagline }} · {{ site.city }}
+        Open podium voor kamermuziek · Amsterdam
     </div>
 
 </footer>
