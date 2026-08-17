@@ -1,1 +1,317 @@
-- Voor SEO is het vervolgens verstandig om, zodra je domein live staat, Google Search Console te koppelen en de sitemap in te dienen; Google raadt dat expliciet aan om nieuwe/gewijzigde pagina's te helpen ontdekken.
+KAMERCIRKEL — TODO WEBSITE
+===========================
+
+WEBSITE — INHOUD
+----------------
+
+[ ] Definitieve naam van het festival bevestigen
+[ ] Definitieve teksten voor de website vaststellen
+[ ] Tekst over het concept verder aanscherpen
+[ ] Tekst voor musici aanscherpen: professioneel niveau, klassieke kamermuziek, ensembles
+[ ] Tekst voor luisteraars aanscherpen
+[ ] Tekst toevoegen over musici die nog geen ensemble hebben en anderen willen ontmoeten
+[ ] Eventuele tekst over doel/community van Kamercirkel toevoegen
+[ ] Definitieve Instagram-account instellen
+[ ] WhatsApp-community/groep aanmaken zodra relevant
+[ ] Controleren of alle informatie voor eerste open podium klopt
+
+
+EERSTE OPEN PODIUM
+------------------
+
+[ ] Datum controleren: 1 september 2026
+[ ] Begin- en eindtijd definitief maken
+[ ] Locatie controleren: Zaal 100
+[ ] Adres controleren: De Wittenstraat 100, 1052 BA Amsterdam
+[ ] Vleugel expliciet vermelden
+[ ] Entreeprijs controleren: €5
+[ ] Inschrijvingsprocedure definitief maken
+[ ] Bepalen of luisteraars vooraf moeten aanmelden of gewoon kunnen komen
+[ ] Informatie over beschikbare speeltijd definitief formuleren
+
+
+INSCHRIJVEN
+-----------
+
+[ ] Google Form definitief maken
+[ ] Formulier testen op desktop en mobiel
+
+Formulier moet minimaal vragen om:
+[ ] Naam ensemble
+[ ] Naam contactpersoon
+[ ] E-mailadres
+[ ] Telefoonnummer
+[ ] Namen van musici
+[ ] Instrument per musicus
+[ ] Componist
+[ ] Muziekstuk
+[ ] Geschatte speelduur
+[ ] Eventuele aanvullende opmerkingen
+
+Eventueel:
+[ ] Niveau/achtergrond ensemble
+[ ] Foto van ensemble
+[ ] Toestemming voor publicatie van ensemble/muziekgegevens
+[ ] Toestemming voor gebruik van foto
+
+
+PROGRAMMA
+---------
+
+[ ] Bepalen welke inschrijvingen worden geaccepteerd
+[ ] Bepalen hoe speeltijd wordt verdeeld
+[ ] Google Sheet als centrale administratie inrichten
+[ ] Statuskolom toevoegen (bijv. nieuw / bevestigd / afgewezen)
+[ ] Programma-volgorde toevoegen
+[ ] Voorlopige speeltijd kunnen toewijzen
+[ ] Voorlopig programma op website tonen
+[ ] Duidelijk aangeven dat programma en tijden nog kunnen wijzigen
+[ ] Definitief programma kunnen publiceren
+[ ] Programma automatisch vanuit gegevens laten genereren
+[ ] Controleren of programma automatisch kan worden bijgewerkt na wijzigingen in Google Sheet
+
+
+WEBSITE — PROGRAMMASECTIE
+-------------------------
+
+[ ] Nieuwe sectie "Voorlopig programma" toevoegen
+[ ] Ensemble per programmaonderdeel tonen
+[ ] Namen van musici tonen
+[ ] Instrumenten tonen
+[ ] Componist tonen
+[ ] Muziekstuk tonen
+[ ] Speelduur tonen
+[ ] Speeltijd tonen zodra bekend
+[ ] Status "voorlopig programma" duidelijk zichtbaar maken
+[ ] Programma mobiel goed laten werken
+
+
+AFBEELDINGEN
+------------
+
+[ ] Map /images/ aanmaken
+[ ] Eerste sfeerfoto voor Kamercirkel kiezen
+[ ] Eventuele foto van Zaal 100 toevoegen
+[ ] Alt-teksten voor afbeeldingen toevoegen
+[ ] CSS voor afbeeldingen maken
+[ ] Beslissen of ensembles later zelf een foto kunnen uploaden
+[ ] Eventueel foto-upload via Google Form onderzoeken
+
+
+TECHNISCHE WEBSITE
+------------------
+
+[ ] Controleren of huidige architectuur definitief is:
+
+    site.yaml
+        ↓
+    build.py
+        ↓
+    templates/index.html
+        ↓
+    css/style.css
+        ↓
+    GitHub Actions
+        ↓
+    GitHub Pages
+
+[ ] Oude gegenereerde index.html uit repository verwijderen
+    (alleen doen als nieuwe GitHub Actions deployment goed werkt)
+
+[ ] Controleren dat build.py lokaal werkt
+[ ] Controleren dat GitHub Actions automatisch bouwt
+[ ] Controleren dat GitHub Pages automatisch publiceert
+[ ] Mobiele versie testen
+[ ] Desktopversie testen
+[ ] Tabletversie testen
+[ ] Links testen
+[ ] Google Maps-link testen
+[ ] Instagram-link testen
+[ ] Google Form-link testen
+[ ] Alle afbeeldingen testen
+[ ] Geen dode links / ontbrekende bestanden
+
+
+SITE.YAML
+---------
+
+[ ] Controleren dat alle veranderlijke informatie centraal in site.yaml staat
+
+Minimaal:
+[ ] Naam
+[ ] Tagline
+[ ] Beschrijving
+[ ] Stad
+[ ] Canonical URL
+[ ] Eventdatum
+[ ] Begin- en eindtijd
+[ ] Locatie
+[ ] Adres
+[ ] Entreeprijs
+[ ] Evenementteksten
+[ ] Inschrijvingslink
+[ ] Instagram
+[ ] WhatsApp
+
+[ ] Controleren dat design in style.css blijft
+[ ] Geen designparameters onnodig naar YAML verplaatsen
+
+
+SEO / GOOGLE
+------------
+
+[ ] Definitieve domeinnaam instellen
+[ ] Canonical URL invullen in site.yaml
+[ ] Sitemap.xml genereren
+[ ] robots.txt genereren
+[ ] Structured data voor Event controleren
+[ ] Structured data voor Organization controleren
+[ ] Eventdatum en tijden controleren in structured data
+[ ] Locatie controleren in structured data
+[ ] Prijs controleren in structured data
+[ ] Google Search Console instellen
+[ ] Domein toevoegen aan Google Search Console
+[ ] Sitemap aanmelden bij Google
+[ ] Website laten indexeren
+[ ] Controleren hoe Kamercirkel in Google verschijnt
+[ ] Eventueel Open Graph / social sharing afbeelding toevoegen
+
+
+LLM / AI-VINDBAARHEID
+--------------------
+
+[ ] Duidelijke beschrijving van Kamercirkel op homepage
+[ ] Duidelijk benoemen:
+    - klassieke kamermuziek
+    - open podium
+    - Amsterdam
+    - ensembles
+    - musici
+    - luisteraars
+    - community
+[ ] Duidelijke evenementgegevens in HTML
+[ ] Structured data controleren
+[ ] Eventinformatie niet uitsluitend via JavaScript laten verschijnen
+[ ] Duidelijke titel en meta description
+[ ] Canonical URL instellen
+[ ] Sitemap publiceren
+[ ] Controleren of belangrijkste informatie als normale tekst op pagina staat
+
+
+EIGEN DOMEIN
+------------
+
+Zodra definitieve naam en domein vaststaan:
+
+[ ] Domein registreren
+[ ] DNS instellen bij domeinprovider
+[ ] Custom domain instellen bij GitHub Pages
+[ ] HTTPS controleren
+[ ] www-versie instellen
+[ ] Redirect / canonical keuze maken
+[ ] site.yaml canonical_url aanpassen
+[ ] Sitemap aanpassen
+[ ] Google Search Console opnieuw controleren
+[ ] Website openen via definitieve domeinnaam
+
+
+GITHUB
+------
+
+[ ] Repository blijft:
+    https://github.com/eckhardtubbens/kamercirkel
+
+[ ] GitHub Actions controleren
+[ ] GitHub Pages controleren
+[ ] Geen gegenereerde bestanden onnodig committen
+[ ] README toevoegen
+[ ] Eventueel LICENSE toevoegen
+[ ] .gitignore controleren
+
+
+TESTEN VOOR PUBLICATIE
+----------------------
+
+[ ] Website openen op laptop
+[ ] Website openen op iPhone
+[ ] Website openen op Android
+[ ] Website testen met kleine schermbreedte
+[ ] Alle teksten controleren op spelling
+[ ] Alle data controleren
+[ ] Alle tijden controleren
+[ ] Adres controleren
+[ ] Prijs controleren
+[ ] Formulier testen
+[ ] Testinschrijving uitvoeren
+[ ] Testprogramma genereren
+[ ] Instagram testen
+[ ] Google Maps testen
+[ ] Google Search Console controleren
+[ ] Structured data testen
+
+
+LATER / AUTOMATISERING
+----------------------
+
+[ ] Google Form koppelen aan Google Sheet
+[ ] Google Sheet als centrale administratie gebruiken
+[ ] Status "bevestigd" toevoegen
+[ ] Alleen bevestigde ensembles op website tonen
+[ ] Programma automatisch uit Sheet laten genereren
+[ ] Speeltijden automatisch berekenen / beheren
+[ ] Programma automatisch publiceren
+[ ] E-mailbevestiging aan deelnemende ensembles onderzoeken
+[ ] Automatische herinnering voor deelnemende ensembles onderzoeken
+[ ] Automatische WhatsApp-uitnodiging onderzoeken
+[ ] Foto-upload voor ensembles onderzoeken
+[ ] Eventueel meerdere evenementen ondersteunen
+[ ] Historische evenementen archiveren
+[ ] Oude programma's op website bewaren
+
+
+TOEKOMSTIGE STRUCTUUR
+---------------------
+
+[ ] Website geschikt maken voor meerdere open podia
+
+Bijvoorbeeld:
+
+/event/2026-09-01/
+/event/2026-10-06/
+/event/2026-11-03/
+
+[ ] Overzicht met komende evenementen
+[ ] Archief met eerdere evenementen
+[ ] Programma per evenement
+[ ] Eventuele foto's per evenement
+[ ] Ensembles / musici eventueel terug laten komen in archief
+
+
+COMMUNITY
+---------
+
+[ ] Instagram actief maken
+[ ] WhatsApp-community opzetten
+[ ] Eerste bezoekers uitnodigen om WhatsApp-community te joinen
+[ ] Eerste deelnemende ensembles verzamelen
+[ ] Contactgegevens van geïnteresseerde musici bijhouden
+[ ] Na eerste avond feedback verzamelen
+[ ] Evalueren welke informatie musici missen op website
+[ ] Website aanpassen op basis van eerste avond
+
+
+EERSTE LIVE AVOND
+-----------------
+
+[ ] Programma definitief maken
+[ ] Speeltijden definitief maken
+[ ] Deelnemers informeren
+[ ] Locatie bevestigen
+[ ] Vleugel bevestigen
+[ ] Betaling / €5 entree regelen
+[ ] Eventuele ontvangst / registratie regelen
+[ ] Foto's maken indien gewenst
+[ ] Nieuwe musici / ensembles actief aanspreken
+[ ] Na afloop deelnemers uitnodigen voor WhatsApp
+[ ] Feedback verzamelen
+[ ] Tweede open podium plannen
