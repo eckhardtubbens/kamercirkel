@@ -1,3 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Generated website files
+/index.html
+/robots.txt
+/sitemap.xml
+
+# Local/editor files
 .vscode/
+.idea/
 .DS_Store
 Thumbs.db
