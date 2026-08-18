@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://eckhardtubbens.github.io/kamercirkel/sitemap.xml
+Sitemap: https://kamercirkel.nl/sitemap.xml

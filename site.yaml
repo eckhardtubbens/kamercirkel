@@ -10,12 +10,13 @@ site:
     musici te ontmoeten.
 
   url: "https://kamercirkel.nl"
+  email: "info@kamercirkel.nl"
 
 event:
   title: "Kamercirkel — Open podium voor klassieke kamermuziek"
-  date: "2026-09-01"
-  start_time: "19:30"
-  end_time: "23:00"
+  date: "9999-12-31"
+  start_time: "00:00"
+  end_time: "00:00"
 
   location:
     name: "Zaal 100"
