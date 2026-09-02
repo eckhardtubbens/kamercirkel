@@ -25,7 +25,7 @@ event:
     city: "Amsterdam"
     map_url: "https://www.google.com/maps/search/?api=1&query=De+Wittenstraat+100%2C+1052+BA+Amsterdam"
 
-  price: 5
+  price: "gratis"
 
   text:
     introduction: >
