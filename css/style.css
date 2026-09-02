@@ -240,6 +240,101 @@ h2 {
 
 
 /* --------------------------------
+   PROGRAMME / UPCOMING EVENTS
+-------------------------------- */
+
+.programme,
+.upcoming-events {
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    gap: 5vw;
+}
+
+.programme-content,
+.upcoming-events-content {
+    max-width: 780px;
+}
+
+.programme-content h2,
+.upcoming-events-content h2 {
+    margin-bottom: 3rem;
+}
+
+.programme-list,
+.upcoming-events-list {
+    border-top: 1px solid #151515;
+}
+
+.programme-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 2rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid #151515;
+}
+
+.programme-time,
+.programme-duration {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.programme-item h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.35rem;
+    font-weight: 500;
+}
+
+.programme-item p {
+    margin: 0;
+}
+
+.programme-details,
+.programme-duration,
+.programme-empty {
+    opacity: 0.65;
+}
+
+.programme-details {
+    margin-top: 0.35rem !important;
+    font-size: 0.9rem;
+}
+
+.programme-duration {
+    display: block;
+    margin-top: 0.8rem;
+}
+
+.programme-empty {
+    max-width: 520px;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.upcoming-event {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #151515;
+}
+
+.upcoming-event strong {
+    min-width: 190px;
+    font-size: 1.35rem;
+    font-weight: 500;
+}
+
+.upcoming-event span {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.65;
+}
+
+
+/* --------------------------------
    PLAY
 -------------------------------- */
 
@@ -473,6 +568,8 @@ h2 {
     /* ABOUT */
 
     .about,
+    .programme,
+    .upcoming-events,
     .play,
     .location {
         grid-template-columns: 1fr;
@@ -494,6 +591,17 @@ h2 {
 
     .concept {
         margin-top: 3rem;
+    }
+
+    /* PROGRAMME */
+
+    .programme-item {
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+    }
+
+    .upcoming-event strong {
+        min-width: 0;
     }
 
 

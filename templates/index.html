@@ -275,12 +275,111 @@
 
 
 
+    <!-- PROGRAMME -->
+
+    <section class="programme">
+
+        <div class="section-number">
+            02
+        </div>
+
+        <div class="programme-content">
+
+            <p class="eyebrow">
+                Wat wordt er gespeeld?
+            </p>
+
+            <h2>
+                Voorlopig programma.
+            </h2>
+
+            {% if event.programme %}
+            <div class="programme-list">
+
+                {% for item in event.programme %}
+                <article class="programme-item">
+
+                    <div class="programme-time">
+                        {{ item.time | default("") }}
+                    </div>
+
+                    <div>
+                        <h3>
+                            {{ item.piece }}
+                        </h3>
+
+                        <p>
+                            {{ item.composer }}{% if item.ensemble %} · {{ item.ensemble }}{% endif %}
+                        </p>
+
+                        {% if item.musicians or item.instruments %}
+                        <p class="programme-details">
+                            {{ item.musicians | default("") }}{% if item.musicians and item.instruments %} · {% endif %}{{ item.instruments | default("") }}
+                        </p>
+                        {% endif %}
+
+                        {% if item.duration %}
+                        <span class="programme-duration">
+                            {{ item.duration }}
+                        </span>
+                        {% endif %}
+                    </div>
+
+                </article>
+                {% endfor %}
+
+            </div>
+            {% else %}
+            <p class="programme-empty">
+                Het programma wordt binnenkort bekendgemaakt.
+            </p>
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- UPCOMING EVENTS -->
+
+    <section class="upcoming-events">
+
+        <div class="section-number">
+            03
+        </div>
+
+        <div class="upcoming-events-content">
+
+            <p class="eyebrow">
+                Agenda
+            </p>
+
+            <h2>
+                Komende edities.
+            </h2>
+
+            <div class="upcoming-events-list">
+
+                {% for upcoming_event in upcoming_events[:4] %}
+                <div class="upcoming-event">
+                    <strong>{{ upcoming_event.date_formatted.day }} {{ upcoming_event.date_formatted.month }}</strong>
+                    <span>{{ upcoming_event.date_formatted.year }}</span>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
     <!-- PLAY -->
 
     <section class="play">
 
         <div class="section-number">
-            02
+            04
         </div>
 
 
@@ -370,7 +469,7 @@
     <section class="location">
 
         <div class="section-number">
-            03
+            05
         </div>
 
 

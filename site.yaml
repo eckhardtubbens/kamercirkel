@@ -18,6 +18,10 @@ event:
   start_time: "20:30"
   end_time: "22:00"
 
+  programme:
+    - composer: "Beethoven"
+      piece: "Piano Trio in C minor, Op.1 No.3"
+
   location:
     name: "Zaal 100"
     address: "De Wittenstraat 100"
@@ -72,6 +76,12 @@ event:
   playing:
     registration: "Vooraf inschrijven"
     time: "De beschikbare speeltijd hangt af van het aantal inschrijvingen."
+
+upcoming_events:
+  - date: "2026-10-07"
+  - date: "2026-11-04"
+  - date: "2026-12-02"
+  - date: "2027-01-06"
 
 social:
   instagram: "https://instagram.com/..."

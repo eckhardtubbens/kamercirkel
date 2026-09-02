@@ -92,6 +92,9 @@ site["event"]["date_formatted"] = format_date(
     site["event"]["date"]
 )
 
+for upcoming_event in site.get("upcoming_events", []):
+    upcoming_event["date_formatted"] = format_date(upcoming_event["date"])
+
 site["event"]["end_datetime"] = (
     f"{site['event']['date']}T{site['event']['end_time']}:00"
 )
