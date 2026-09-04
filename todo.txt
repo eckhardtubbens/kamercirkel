@@ -161,14 +161,14 @@ SEO / GOOGLE
 ------------
 
 [ ] Definitieve domeinnaam instellen
-[ ] Canonical URL invullen in site.yaml
-[ ] Sitemap.xml genereren
-[ ] robots.txt genereren
-[ ] Structured data voor Event controleren
-[ ] Structured data voor Organization controleren
-[ ] Eventdatum en tijden controleren in structured data
-[ ] Locatie controleren in structured data
-[ ] Prijs controleren in structured data
+[x] Canonical URL invullen in site.yaml
+[x] Sitemap.xml genereren
+[x] robots.txt genereren
+[x] Structured data voor Event controleren
+[x] Structured data voor Organization controleren
+[x] Eventdatum en tijden controleren in structured data
+[x] Locatie controleren in structured data
+[x] Prijs controleren in structured data
 [ ] Google Search Console instellen
 [ ] Domein toevoegen aan Google Search Console
 [ ] Sitemap aanmelden bij Google
@@ -180,8 +180,8 @@ SEO / GOOGLE
 LLM / AI-VINDBAARHEID
 --------------------
 
-[ ] Duidelijke beschrijving van Kamercirkel op homepage
-[ ] Duidelijk benoemen:
+[x] Duidelijke beschrijving van Kamercirkel op homepage
+[x] Duidelijk benoemen:
     - klassieke kamermuziek
     - open podium
     - Amsterdam
@@ -189,13 +189,13 @@ LLM / AI-VINDBAARHEID
     - musici
     - luisteraars
     - community
-[ ] Duidelijke evenementgegevens in HTML
-[ ] Structured data controleren
-[ ] Eventinformatie niet uitsluitend via JavaScript laten verschijnen
-[ ] Duidelijke titel en meta description
-[ ] Canonical URL instellen
-[ ] Sitemap publiceren
-[ ] Controleren of belangrijkste informatie als normale tekst op pagina staat
+[x] Duidelijke evenementgegevens in HTML
+[x] Structured data controleren
+[x] Eventinformatie niet uitsluitend via JavaScript laten verschijnen
+[x] Duidelijke titel en meta description
+[x] Canonical URL instellen
+[x] Sitemap publiceren
+[x] Controleren of belangrijkste informatie als normale tekst op pagina staat
 
 
 EIGEN DOMEIN

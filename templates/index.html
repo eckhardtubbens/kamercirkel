@@ -61,13 +61,30 @@
         content="nl_NL"
     >
 
+    <meta
+        property="og:site_name"
+        content="{{ site.name }}"
+    >
+
 
     <!-- Structured data -->
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
+        "@graph": [
+        {
+        "@type": "Organization",
+        "@id": "{{ site.canonical_url }}/#organization",
+        "name": {{ site.name | tojson }},
+        "description": {{ site.description | tojson }},
+        "url": {{ site.canonical_url | tojson }},
+        "email": {{ site.email | tojson }}
+        },
+        {
         "@type": "Event",
+        "@id": "{{ site.canonical_url }}/#event",
+        "url": "{{ site.canonical_url }}/",
 
         "name": {{ event.title | tojson }},
 
@@ -93,17 +110,15 @@
 
         "offers": {
             "@type": "Offer",
-            "price": {{ event.price }},
+            "price": {{ event.price_value }},
             "priceCurrency": "EUR",
             "availability": "https://schema.org/InStock"
         },
 
+        "isAccessibleForFree": true,
+
         "organizer": {
-            "@type": "Organization",
-            "name": {{ site.name | tojson }}
-            {% if site.canonical_url %},
-            "url": {{ site.canonical_url | tojson }}
-            {% endif %}
+            "@id": "{{ site.canonical_url }}/#organization"
         }
 
         {% if social.instagram %}
@@ -112,6 +127,8 @@
             {{ social.instagram | tojson }}
         ]
         {% endif %}
+        }
+        ]
     }
     </script>
 
@@ -214,7 +231,11 @@
                     <span class="label">Entree</span>
 
                     <strong>
-                        € {{ event.price }}
+                        {% if event.price_value == 0 %}
+                            Gratis
+                        {% else %}
+                            € {{ event.price }}
+                        {% endif %}
                     </strong>
                 </div>
 
@@ -292,6 +313,10 @@
             <h2>
                 Voorlopig programma.
             </h2>
+
+            <p class="programme-disclaimer">
+                {{ event.programme_disclaimer }}
+            </p>
 
             {% if event.programme %}
             <div class="programme-list">
@@ -547,19 +572,6 @@
 
         {% endif %}
 
-
-        {% if social.whatsapp %}
-
-            <a
-                href="{{ social.whatsapp }}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                WhatsApp
-                <span>↗</span>
-            </a>
-
-        {% endif %}
 
     </div>
 

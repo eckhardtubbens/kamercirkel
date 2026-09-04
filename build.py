@@ -1,6 +1,7 @@
 from pathlib import Path
-from datetime import date
+from datetime import date, datetime
 from urllib.parse import urljoin
+from zoneinfo import ZoneInfo
 
 import yaml
 from jinja2 import Environment, FileSystemLoader
@@ -92,12 +93,24 @@ site["event"]["date_formatted"] = format_date(
     site["event"]["date"]
 )
 
+event_date = date.fromisoformat(str(site["event"]["date"]))
+event_timezone = ZoneInfo(site["event"].get("timezone", "Europe/Amsterdam"))
+
+for datetime_key, time_key in (
+    ("start_datetime", "start_time"),
+    ("end_datetime", "end_time"),
+):
+    event_datetime = datetime.combine(
+        event_date,
+        datetime.strptime(site["event"][time_key], "%H:%M").time(),
+        tzinfo=event_timezone,
+    )
+    site["event"][datetime_key] = event_datetime.isoformat()
+
+site["event"]["price_value"] = 0 if str(site["event"]["price"]).lower() == "gratis" else site["event"]["price"]
+
 for upcoming_event in site.get("upcoming_events", []):
     upcoming_event["date_formatted"] = format_date(upcoming_event["date"])
-
-site["event"]["end_datetime"] = (
-    f"{site['event']['date']}T{site['event']['end_time']}:00"
-)
 
 # --------------------------------------------------
 # Derived site information

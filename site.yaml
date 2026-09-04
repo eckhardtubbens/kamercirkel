@@ -7,7 +7,7 @@ site:
     Kamercirkel is een open podium voor klassieke kamermuziek in Amsterdam.
     Een plek voor ensembles, professionele musici, conservatoriumstudenten
     en gevorderde amateurs om kamermuziek te spelen, te luisteren en andere
-    musici te ontmoeten.
+    musici te ontmoeten en deel uit te maken van een muzikale community.
 
   url: "https://kamercirkel.nl"
   email: "info@kamercirkel.nl"
@@ -17,10 +17,13 @@ event:
   date: "2026-10-07"
   start_time: "20:30"
   end_time: "22:00"
+  timezone: "Europe/Amsterdam"
 
   programme:
     - composer: "Beethoven"
       piece: "Piano Trio in C minor, Op.1 No.3"
+
+  programme_disclaimer: "Het programma kan nog wijzigen."
 
   location:
     name: "Zaal 100"
@@ -84,5 +87,4 @@ upcoming_events:
   - date: "2027-01-06"
 
 social:
-  instagram: "https://instagram.com/..."
-  whatsapp: ""
+  instagram: "https://instagram.com/kamercirkel"

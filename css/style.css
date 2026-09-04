@@ -260,6 +260,11 @@ h2 {
     margin-bottom: 3rem;
 }
 
+.programme-disclaimer {
+    margin: -1.5rem 0 3rem;
+    opacity: 0.65;
+}
+
 .programme-list,
 .upcoming-events-list {
     border-top: 1px solid #151515;
