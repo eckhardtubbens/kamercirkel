@@ -33,6 +33,20 @@ a {
     border-bottom: 1px solid #151515;
 }
 
+.header-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+}
+
+.header-logo {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    mix-blend-mode: multiply;
+}
+
 .logo {
     font-size: 1.15rem;
     font-weight: 700;
@@ -504,6 +518,15 @@ h2 {
 
 .footer strong {
     font-size: 0.9rem;
+}
+
+.initiative-logo {
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 0.75rem;
+    object-fit: cover;
+    mix-blend-mode: multiply;
 }
 
 .footer-links {

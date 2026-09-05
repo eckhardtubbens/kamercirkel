@@ -21,9 +21,23 @@ event:
 
   programme:
     - composer: "Beethoven"
-      piece: "Piano Trio in C minor, Op.1 No.3"
+      piece: "Piano Trio in C klein, Op.1 No.3"
+    - composer: "Haydn"
+      piece: "Piano Trio in C groot, Hob XV:27"
+    - composer: "Debussy"
+      piece: "Viool sonate in G klein, L.140"
+    - composer: "Brahms/Schubert"
+      piece: "Cello sonate"
 
   programme_disclaimer: "Het programma kan nog wijzigen."
+
+  performer: "Deelnemende ensembles"
+
+  image: "https://kamercirkel.nl/images/logo_white.jpg"
+
+  offer:
+    valid_from: "2026-09-05"
+    url: "https://kamercirkel.nl/"
 
   location:
     name: "Zaal 100"
@@ -84,7 +98,6 @@ upcoming_events:
   - date: "2026-10-07"
   - date: "2026-11-04"
   - date: "2026-12-02"
-  - date: "2027-01-06"
 
 social:
   instagram: "https://instagram.com/kamercirkel"

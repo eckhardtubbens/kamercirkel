@@ -90,6 +90,15 @@
 
         "description": {{ event.text.introduction | tojson }},
 
+        "performer": {
+            "@type": "PerformingGroup",
+            "name": {{ event.performer | tojson }}
+        },
+
+        {% if event.image %}
+        "image": [{{ event.image | tojson }}],
+        {% endif %}
+
         "startDate": "{{ event.start_datetime }}",
         "endDate": "{{ event.end_datetime }}",
 
@@ -112,7 +121,9 @@
             "@type": "Offer",
             "price": {{ event.price_value }},
             "priceCurrency": "EUR",
-            "availability": "https://schema.org/InStock"
+            "availability": "https://schema.org/InStock",
+            "validFrom": "{{ event.offer.valid_from }}",
+            "url": {{ event.offer.url | tojson }}
         },
 
         "isAccessibleForFree": true,
@@ -150,9 +161,16 @@
 
     <a
         href="/"
-        class="logo"
+        class="header-brand"
     >
-        {{ site.name }}
+        <span class="logo">
+            {{ site.name }}
+        </span>
+        <img
+            class="header-logo"
+            src="images/logo_white.jpg"
+            alt="Logo van Kamercirkel"
+        >
     </a>
 
     <span class="edition">
@@ -509,7 +527,6 @@
                 {{ event.location.name }}
             </h2>
 
-
             <p class="address">
 
                 {{ event.location.address }}<br>
@@ -544,6 +561,11 @@
 <footer class="footer">
 
     <div class="footer-name">
+        <img
+            class="initiative-logo"
+            src="images/logo_white.jpg"
+            alt="Logo van Kamercirkel"
+        >
         {{ site.name }}
     </div>
 
