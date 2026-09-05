@@ -107,7 +107,9 @@ for datetime_key, time_key in (
     )
     site["event"][datetime_key] = event_datetime.isoformat()
 
-site["event"]["price_value"] = 0 if str(site["event"]["price"]).lower() == "gratis" else site["event"]["price"]
+price_label = str(site["event"]["price"]).strip()
+site["event"]["price_label"] = price_label
+site["event"]["price_value"] = 0 if price_label.lower() in {"gratis", "vrije bijdrage"} else price_label
 
 for upcoming_event in site.get("upcoming_events", []):
     upcoming_event["date_formatted"] = format_date(upcoming_event["date"])

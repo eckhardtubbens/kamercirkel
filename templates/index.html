@@ -249,11 +249,7 @@
                     <span class="label">Entree</span>
 
                     <strong>
-                        {% if event.price_value == 0 %}
-                            Gratis
-                        {% else %}
-                            € {{ event.price }}
-                        {% endif %}
+                        {{ event.price_label }}
                     </strong>
                 </div>
 
