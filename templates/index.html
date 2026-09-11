@@ -24,6 +24,12 @@
         content="index, follow"
     >
 
+    <link
+        rel="icon"
+        href="images/logo_white.jpg"
+        type="image/jpeg"
+    >
+
     {% if site.canonical_url %}
     <link
         rel="canonical"
@@ -65,6 +71,17 @@
         property="og:site_name"
         content="{{ site.name }}"
     >
+
+    {% if event.image %}
+    <meta
+        property="og:image"
+        content="{{ event.image }}"
+    >
+    <meta
+        property="og:image:alt"
+        content="Logo van {{ site.name }}"
+    >
+    {% endif %}
 
 
     <!-- Structured data -->

@@ -26,10 +26,10 @@ event:
       piece: "Piano Trio in C groot, Hob XV:27"
     - composer: "Debussy"
       piece: "Viool sonate in G klein, L.140"
-    - composer: "Brahms/Schubert"
-      piece: "Cello sonate"
+    - composer: "Brahms"
+      piece: "Cello sonate in E klein, Op.38"
 
-  programme_disclaimer: "Het programma kan nog wijzigen."
+  programme_disclaimer: #"Het programma kan nog wijzigen."
 
   performer: "Deelnemende ensembles"
 
