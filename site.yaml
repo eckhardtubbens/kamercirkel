@@ -29,7 +29,7 @@ event:
     - composer: "Brahms"
       piece: "Cello sonate in E klein, Op.38"
 
-  programme_disclaimer: #"Het programma kan nog wijzigen."
+  programme_disclaimer: "" #"Het programma kan nog wijzigen."
 
   performer: "Deelnemende ensembles"
 
