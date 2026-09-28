@@ -68,8 +68,7 @@
       color: var(--muted);
     }
 
-    form,
-    .confirmation {
+    form {
       border-top: 1px solid var(--ink);
     }
 
@@ -149,24 +148,6 @@
 
     .form-message.error {
       color: var(--error);
-    }
-
-    .confirmation {
-      padding-top: 1.5rem;
-    }
-
-    .confirmation h2 {
-      margin: 0 0 0.5rem;
-      font-size: 1.5rem;
-    }
-
-    .order-id {
-      overflow-wrap: anywhere;
-      font-size: 0.85rem;
-    }
-
-    .payment-link {
-      margin-top: 1.25rem;
     }
 
     .honeypot {
@@ -252,25 +233,11 @@
       </div>
 
       <button id="submit-button" type="submit">
-        <span>Bestelling opslaan</span>
+        <span>Afrekenen</span>
         <span aria-hidden="true">↗</span>
       </button>
       <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
     </form>
-
-    <section class="confirmation" id="confirmation" hidden aria-live="polite">
-      <h2>Bestelling genoteerd.</h2>
-      <p>Concert: <strong id="confirmation-event"></strong></p>
-      <p>
-        Je bestelling staat nog open totdat de betaling is gecontroleerd.
-        Rond de betaling af via bunq.
-      </p>
-      <p class="order-id">Ordernummer: <strong id="order-id"></strong></p>
-      <a class="payment-link" id="payment-link" href="#" target="_top" rel="noopener noreferrer">
-        <span>Verder naar bunq</span>
-        <span aria-hidden="true">↗</span>
-      </a>
-    </section>
   </main>
 
   <script>
@@ -325,19 +292,25 @@
 
     ticketForm.addEventListener("submit", function (event) {
       event.preventDefault();
+
+      const checkoutWindow = window.open("about:blank", "_blank");
+      if (!checkoutWindow) {
+        formMessage.textContent = "Sta pop-ups toe om door te gaan naar bunq.";
+        formMessage.classList.add("error");
+        return;
+      }
+
       formMessage.textContent = "Bestelling wordt opgeslagen...";
       formMessage.classList.remove("error");
       submitButton.disabled = true;
 
       google.script.run
         .withSuccessHandler(function (order) {
-          document.getElementById("order-id").textContent = order.orderId;
-          document.getElementById("payment-link").href = order.paymentUrl;
-          document.getElementById("confirmation-event").textContent = order.eventLabel;
-          ticketForm.hidden = true;
-          document.getElementById("confirmation").hidden = false;
+          checkoutWindow.opener = null;
+          checkoutWindow.location.replace(order.paymentUrl);
         })
         .withFailureHandler(function (error) {
+          checkoutWindow.close();
           formMessage.textContent = error.message || "Er ging iets mis. Probeer het opnieuw.";
           formMessage.classList.add("error");
           submitButton.disabled = false;

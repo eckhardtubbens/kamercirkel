@@ -120,11 +120,85 @@ function submitTicketOrder(form) {
     lock.releaseLock();
   }
 
+  sendOrderConfirmation_(email, name, selectedEvent, quantity, total, orderId, paymentUrl);
+
   return {
     orderId: orderId,
     paymentUrl: paymentUrl,
     eventLabel: selectedEvent.label,
   };
+}
+
+function sendOrderConfirmation_(email, name, selectedEvent, quantity, total, orderId, paymentUrl) {
+  try {
+    const replyToAddress = "info@kamercirkel.nl";
+    const options = {
+      name: "Kamercirkel",
+      replyTo: replyToAddress,
+      htmlBody: [
+        "<p>Beste " + escapeHtml_(name) + ",</p>",
+        "<p>We hebben je bestelling ontvangen. Je kaartjes zijn pas definitief nadat de betaling is ontvangen.</p>",
+        "<p><strong>Concert:</strong> " + escapeHtml_(selectedEvent.label) + "<br>",
+        "<strong>Aantal kaartjes:</strong> " + quantity + "<br>",
+        "<strong>Totaal:</strong> " + formatEmailAmount_(total) + "<br>",
+        "<strong>Ordernummer:</strong> " + orderId + "</p>",
+        '<p><a href="' + escapeHtml_(paymentUrl) + '">Rond je betaling af via bunq</a></p>',
+        "<p>Met vriendelijke groet,<br>Kamercirkel</p>",
+      ].join(""),
+    };
+
+    const plainBody = [
+      "Beste " + name + ",",
+      "",
+      "We hebben je bestelling ontvangen. Je kaartjes zijn pas definitief nadat de betaling is ontvangen.",
+      "Concert: " + selectedEvent.label,
+      "Aantal kaartjes: " + quantity,
+      "Totaal: " + formatEmailAmount_(total),
+      "Ordernummer: " + orderId,
+      "",
+      "Rond je betaling af via bunq: " + paymentUrl,
+      "",
+      "Met vriendelijke groet,",
+      "Kamercirkel",
+    ].join("\n");
+
+    GmailApp.sendEmail(
+      email,
+      "Bestelbevestiging kaartjes Kamercirkel",
+      plainBody,
+      options,
+    );
+  } catch (error) {
+    console.error("Bestelling opgeslagen maar bevestigingsmail verzenden mislukte: " + error);
+  }
+}
+
+function authorizeEmailSending() {
+  const accountEmail = Session.getEffectiveUser().getEmail();
+
+  if (!accountEmail) {
+    throw new Error("Het uitvoerende Google-account kon niet worden bepaald.");
+  }
+
+  GmailApp.sendEmail(
+    accountEmail,
+    "Kamercirkel: e-mailtoestemming getest",
+    "E-mailverzending voor ticketbevestigingen is geautoriseerd.",
+    { name: "Kamercirkel", replyTo: "info@kamercirkel.nl" },
+  );
+}
+
+function formatEmailAmount_(amount) {
+  return "€" + (Number.isInteger(amount) ? amount : amount.toFixed(2));
+}
+
+function escapeHtml_(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function getTicketEvents_() {

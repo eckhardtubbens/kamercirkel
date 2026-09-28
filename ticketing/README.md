@@ -8,7 +8,14 @@ gekozen concert op en maakt de betaal-URL dynamisch op basis van het totaal.
 Bijvoorbeeld: basis-URL `https://bunq.me/kamercirkel` plus totaal `20` wordt
 `https://bunq.me/kamercirkel/20`. De betaalstatus wordt niet
 automatisch door bunq teruggekoppeld; controleer de betaling in bunq en wijzig
-daarna de status in de Sheet.
+daarna de status in de Sheet. Na klikken op **Afrekenen** wordt de order
+opgeslagen en opent bunq direct in een nieuw tabblad. Als opslaan mislukt,
+sluit dat tabblad en blijft de foutmelding bij het formulier staan.
+
+Na het opslaan verstuurt Apps Script ook een bestelbevestiging met concert,
+aantal kaartjes, totaalbedrag, ordernummer en betaallink. De mail vermeldt dat
+de bestelling pas definitief is na betaling. Een mailfout blokkeert de bunq-
+checkout niet.
 
 Bij betaalde edities in de agenda toont de website ook een koopknop. Die knop
 opent de ticketwebapp met de betreffende concertdatum vooraf geselecteerd.
@@ -53,6 +60,11 @@ opent de ticketwebapp met de betreffende concertdatum vooraf geselecteerd.
    bunq-links op via `https://kamercirkel.nl/ticket-events.json`.
 7. Bij het eerste gebruik autoriseer je de Apps Script-toegang tot externe URL's
    wanneer Google daarom vraagt.
+8. Selecteer in de Apps Script-editor `authorizeEmailSending` en klik **Run**.
+   Autoriseer Gmail wanneer Google daarom vraagt. Dit stuurt een eenmalige
+   testmail naar het account waaronder de webapp wordt uitgevoerd. Bevestigingen
+   worden ook vanaf dat account verstuurd; antwoorden gaan naar
+   `info@kamercirkel.nl`.
 
 ## Bestellingen controleren
 
