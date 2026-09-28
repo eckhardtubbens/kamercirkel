@@ -30,19 +30,17 @@ The website is not intended to be a complex web application. It is a lightweight
 The core architecture is:
 
 ```text
-                    CONTENT
-                       │
-                       ▼
-                  site.yaml
-                       │
-                       ▼
-                    build.py
-                       │
-                       ▼
-                Jinja2 template
-                       │
-                       ▼
-              generated static HTML
+              site.yaml       ticket-events.json
+                   \               /
+                    \             /
+                     ▼           ▼
+                        build.py
+                           │
+                           ▼
+                  Jinja2 template
+                           │
+                           ▼
+                generated static HTML
                        │
                        ▼
                 GitHub Actions
@@ -58,10 +56,13 @@ The main principle is separation of responsibilities:
 
 ```text
 site.yaml
-    = content and event configuration
+      = site copy, programme, registration and active concert ID
+
+ticket-events.json
+      = concert dates, times, locations, prices and bunq payment links
 
 build.py
-    = data loading, formatting and build logic
+      = data loading, validation, formatting and build logic
 
 templates/index.html
     = HTML structure and Jinja presentation logic
@@ -76,7 +77,9 @@ ARCHITECTURE.md
     = technical documentation
 ```
 
-This architecture intentionally avoids a database, CMS and backend server.
+The public site remains static. The ticket order flow is a small Google Apps
+Script web app backed by a private Google Sheet. This adds a serverless order
+endpoint, but no independently operated server or ticketing marketplace.
 
 ---
 
@@ -480,6 +483,34 @@ The current Google Form URL is stored in `site.yaml`.
 The website should not hard-code the form URL.
 
 ---
+
+## 14A. Ticket sales
+
+The purchase link is configured as `event.tickets.sales_url` in `site.yaml` and
+points to the deployed Google Apps Script web app in `ticketing/`.
+`ticket-events.json` is the editable source of all concert-specific data used by
+the site and ticket flow, including dates, times, locations, prices and the
+bunq.me payment base URL. The ticket flow appends the calculated order total to
+that base URL. `site.yaml` contains `event.current_event_id` to select the
+concert featured on the home page, plus site copy and programme information.
+`build.py` reads and validates the JSON source without rewriting it. The web
+app reads the same public file to populate the concert selector and calculate
+the order. It collects the buyer's name, e-mail, selected concert and quantity,
+records the order in a private Google Sheet, then presents the matching bunq
+payment link.
+
+The web app stores each order as `Nog te controleren`. It does not verify bunq
+payments, so an organizer must compare the payment in bunq and mark the row
+`Betaald` before admitting the buyer. A successful return from bunq is not
+payment confirmation. The dynamic bunq.me URL is built from the configured base
+URL and the concert price multiplied by the selected quantity.
+
+The Google Sheet contains personal data. Keep it private, restrict access to
+organizers and remove records when no longer needed. Only `SPREADSHEET_ID` is
+kept in Apps Script properties; do not put it in public `ticket-events.json`.
+Edit and publish `ticket-events.json` whenever concert details change; rebuild
+the site so the featured concert and agenda stay synchronized. Apps Script
+deployment and configuration are documented in `ticketing/README.md`.
 
 ## 15. Google Forms and Google Sheets
 

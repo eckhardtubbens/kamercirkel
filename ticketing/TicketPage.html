@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kaartje kopen | Kamercirkel</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f1ea;
+      --ink: #151515;
+      --muted: #5b5b56;
+      --line: #9a978f;
+      --error: #a12c1d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1.4rem 5vw;
+      border-bottom: 1px solid var(--ink);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    header span:last-child {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    main {
+      width: min(100% - 2.5rem, 620px);
+      margin: 8vh auto 12vh;
+    }
+
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 9vw, 4.5rem);
+      line-height: 0.98;
+    }
+
+    .event-meta {
+      margin: 1rem 0 3rem;
+      color: var(--muted);
+    }
+
+    form,
+    .confirmation {
+      border-top: 1px solid var(--ink);
+    }
+
+    .field {
+      display: grid;
+      gap: 0.45rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 48px;
+      padding: 0.65rem 0.75rem;
+      border: 1px solid #68665f;
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    input:focus,
+    select:focus,
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #8b3e28;
+      outline-offset: 3px;
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+      font-weight: 700;
+    }
+
+    button,
+    .payment-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      min-height: 52px;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+      font: inherit;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    button:hover,
+    .payment-link:hover {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.6;
+    }
+
+    .notice,
+    .form-message {
+      min-height: 1.5rem;
+      margin: 1rem 0 0;
+      color: var(--muted);
+    }
+
+    .form-message.error {
+      color: var(--error);
+    }
+
+    .confirmation {
+      padding-top: 1.5rem;
+    }
+
+    .confirmation h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    .order-id {
+      overflow-wrap: anywhere;
+      font-size: 0.85rem;
+    }
+
+    .payment-link {
+      margin-top: 1.25rem;
+    }
+
+    .honeypot {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding-inline: 1.25rem;
+      }
+
+      main {
+        margin-top: 3rem;
+      }
+
+      button,
+      .payment-link {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span>Kamercirkel</span>
+    <span>Kaartverkoop</span>
+  </header>
+
+  <main>
+    <div id="ticket-event-config" data-events="<?= settings.eventsJson ?>" hidden></div>
+    <p class="eyebrow">Open podium voor kamermuziek</p>
+    <h1>Koop je kaartje.</h1>
+    <p class="event-meta">Kies de concertdatum waarvoor je kaartjes wilt kopen.</p>
+
+    <form id="ticket-form">
+      <div class="field">
+        <label for="concert">Concert</label>
+        <select id="concert" name="concert" required>
+          <option value="" selected disabled>Kies een concert</option>
+          <? for (var eventIndex = 0; eventIndex < settings.events.length; eventIndex++) { ?>
+          <? var ticketEvent = settings.events[eventIndex]; ?>
+          <option
+            value="<?= ticketEvent.id ?>"
+            <? if (ticketEvent.id === settings.selectedEventId) { ?>selected<? } ?>
+          ><?= ticketEvent.label ?></option>
+          <? } ?>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="name">Naam</label>
+        <input id="name" name="name" type="text" autocomplete="name" maxlength="120" required>
+      </div>
+
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
+      </div>
+
+      <div class="field">
+        <label for="quantity">Aantal kaartjes</label>
+        <select id="quantity" name="quantity" required>
+          <option value="" selected disabled>Kies het aantal</option>
+        </select>
+      </div>
+
+      <div class="total" aria-live="polite">
+        <span>Totaal</span>
+        <output id="total">Kies het aantal kaartjes</output>
+      </div>
+
+      <div class="honeypot" aria-hidden="true">
+        <label for="website">Website</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button id="submit-button" type="submit">
+        <span>Bestelling opslaan</span>
+        <span aria-hidden="true">↗</span>
+      </button>
+      <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+    </form>
+
+    <section class="confirmation" id="confirmation" hidden aria-live="polite">
+      <h2>Bestelling genoteerd.</h2>
+      <p>Concert: <strong id="confirmation-event"></strong></p>
+      <p>
+        Je bestelling staat nog open totdat de betaling is gecontroleerd.
+        Rond de betaling af via bunq.
+      </p>
+      <p class="order-id">Ordernummer: <strong id="order-id"></strong></p>
+      <a class="payment-link" id="payment-link" href="#" target="_top" rel="noopener noreferrer">
+        <span>Verder naar bunq</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </section>
+  </main>
+
+  <script>
+    const ticketEvents = JSON.parse(
+      document.getElementById("ticket-event-config").dataset.events,
+    );
+    const concertSelect = document.getElementById("concert");
+    const quantitySelect = document.getElementById("quantity");
+    const totalOutput = document.getElementById("total");
+    const ticketForm = document.getElementById("ticket-form");
+    const submitButton = document.getElementById("submit-button");
+    const formMessage = document.getElementById("form-message");
+
+    function getSelectedEvent() {
+      return ticketEvents.find(function (ticketEvent) {
+        return ticketEvent.id === concertSelect.value;
+      });
+    }
+
+    function updateQuantities() {
+      const selectedEvent = getSelectedEvent();
+      quantitySelect.replaceChildren(new Option("Kies het aantal", ""));
+      quantitySelect.options[0].disabled = true;
+      quantitySelect.options[0].selected = true;
+
+      if (selectedEvent) {
+        for (let amount = 1; amount <= selectedEvent.max_tickets_per_order; amount += 1) {
+            quantitySelect.add(new Option(
+              amount + (amount === 1 ? " kaartje" : " kaartjes"),
+              String(amount),
+            ));
+        }
+      }
+
+      updateTotal();
+    }
+
+    function updateTotal() {
+      const quantity = Number(quantitySelect.value);
+      const selectedEvent = getSelectedEvent();
+      totalOutput.textContent = quantity
+        ? new Intl.NumberFormat("nl-NL", {
+            style: "currency",
+            currency: "EUR",
+          }).format(selectedEvent.price * quantity)
+        : "Kies het aantal kaartjes";
+    }
+
+    concertSelect.addEventListener("change", updateQuantities);
+    quantitySelect.addEventListener("change", updateTotal);
+    updateQuantities();
+
+    ticketForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      formMessage.textContent = "Bestelling wordt opgeslagen...";
+      formMessage.classList.remove("error");
+      submitButton.disabled = true;
+
+      google.script.run
+        .withSuccessHandler(function (order) {
+          document.getElementById("order-id").textContent = order.orderId;
+          document.getElementById("payment-link").href = order.paymentUrl;
+          document.getElementById("confirmation-event").textContent = order.eventLabel;
+          ticketForm.hidden = true;
+          document.getElementById("confirmation").hidden = false;
+        })
+        .withFailureHandler(function (error) {
+          formMessage.textContent = error.message || "Er ging iets mis. Probeer het opnieuw.";
+          formMessage.classList.add("error");
+          submitButton.disabled = false;
+        })
+        .submitTicketOrder(ticketForm);
+    });
+  </script>
+</body>
+</html>

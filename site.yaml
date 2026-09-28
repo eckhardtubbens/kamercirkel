@@ -13,11 +13,7 @@ site:
   email: "info@kamercirkel.nl"
 
 event:
-  title: "Kamercirkel: Open podium voor kamermuziek"
-  date: "2026-10-07"
-  start_time: "20:30"
-  end_time: "22:00"
-  timezone: "Europe/Amsterdam"
+  current_event_id: "2026-10-07"
 
   programme:
     - composer: "Beethoven"
@@ -35,18 +31,9 @@ event:
 
   image: "https://kamercirkel.nl/images/logo_white.jpg"
 
-  offer:
-    valid_from: "2026-09-05"
-    url: "https://kamercirkel.nl/"
-
-  location:
-    name: "Zaal 100"
-    address: "De Wittenstraat 100"
-    postal_code: "1052 BA"
-    city: "Amsterdam"
-    map_url: "https://www.google.com/maps/search/?api=1&query=De+Wittenstraat+100%2C+1052+BA+Amsterdam"
-
-  price: "vrije bijdrage"
+  tickets:
+    sales_url: "https://script.google.com/macros/s/AKfycbyN43agsRyE4PGINQg0x2XzcdmX6mpp7vxdP0KEX0M_R7F95YpTFmGOLzDwC4vj2XJL/exec"
+    button: "Koop een kaartje"
 
   text:
     introduction: >
@@ -93,11 +80,6 @@ event:
   playing:
     registration: "Vooraf inschrijven"
     time: "De beschikbare speeltijd hangt af van het aantal inschrijvingen."
-
-upcoming_events:
-  - date: "2026-10-07"
-  - date: "2026-11-04"
-  - date: "2026-12-02"
 
 social:
   instagram: "https://instagram.com/kamercirkel"

@@ -139,11 +139,11 @@
             "price": {{ event.price_value }},
             "priceCurrency": "EUR",
             "availability": "https://schema.org/InStock",
-            "validFrom": "{{ event.offer.valid_from }}",
-            "url": {{ event.offer.url | tojson }}
+            "validFrom": "{{ event.date }}",
+            "url": {{ (event.tickets.sales_url if event.price_value > 0 else site.canonical_url) | tojson }}
         },
 
-        "isAccessibleForFree": true,
+        "isAccessibleForFree": {{ (event.price_value == 0) | tojson }},
 
         "organizer": {
             "@id": "{{ site.canonical_url }}/#organization"
@@ -266,13 +266,29 @@
                     <span class="label">Entree</span>
 
                     <strong>
+                        {% if event.price_value == 0 %}
                         {{ event.price_label }}
+                        {% else %}
+                        €{{ event.price_label }}
+                        {% endif %}
                     </strong>
                 </div>
 
             </div>
 
         </div>
+
+        {% if event.tickets.sales_url and event.price_value > 0 %}
+        <a
+            class="ticket-link"
+            href="{{ event.tickets.sales_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            {{ event.tickets.button }}
+            <span aria-hidden="true">↗</span>
+        </a>
+        {% endif %}
 
     </section>
 
@@ -416,14 +432,29 @@
 
             <div class="upcoming-events-list">
 
-                {% for upcoming_event in upcoming_events[:4] %}
+                {% set paid_upcoming_events = ticket_events[:4] | selectattr("price", "gt", 0) | list %}
+                {% for upcoming_event in ticket_events[:4] %}
                 <div class="upcoming-event">
-                    <strong>{{ upcoming_event.date_formatted.day }} {{ upcoming_event.date_formatted.month }}</strong>
-                    <span>{{ upcoming_event.date_formatted.year }}</span>
+                    <div class="upcoming-event-date">
+                        <strong>{{ upcoming_event.date_formatted.day }} {{ upcoming_event.date_formatted.month }}</strong>
+                        <span>{{ upcoming_event.date_formatted.year }}</span>
+                    </div>
                 </div>
                 {% endfor %}
 
             </div>
+
+            {% if event.tickets.sales_url and paid_upcoming_events %}
+            <a
+                class="ticket-link"
+                href="{{ event.tickets.sales_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                {{ event.tickets.button }}
+                <span aria-hidden="true">↗</span>
+            </a>
+            {% endif %}
 
         </div>
 

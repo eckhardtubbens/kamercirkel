@@ -1,0 +1,56 @@
+{
+  "payment_base_url": "https://bunq.me/kamercirkel",
+  "events": [
+    {
+      "id": "2026-10-07",
+      "title": "Kamercirkel: Open podium voor kamermuziek",
+      "date": "2026-10-07",
+      "start_time": "20:30",
+      "end_time": "22:00",
+      "timezone": "Europe/Amsterdam",
+      "price": 0,
+      "max_tickets_per_order": 10,
+      "location": {
+        "name": "Zaal 100",
+        "address": "De Wittenstraat 100",
+        "postal_code": "1052 BA",
+        "city": "Amsterdam",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Wittenstraat+100%2C+1052+BA+Amsterdam"
+      }
+    },
+    {
+      "id": "2026-11-04",
+      "title": "Kamercirkel: Open podium voor kamermuziek",
+      "date": "2026-11-04",
+      "start_time": "20:30",
+      "end_time": "22:00",
+      "timezone": "Europe/Amsterdam",
+      "price": 5,
+      "max_tickets_per_order": 10,
+      "location": {
+        "name": "Zaal 100",
+        "address": "De Wittenstraat 100",
+        "postal_code": "1052 BA",
+        "city": "Amsterdam",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Wittenstraat+100%2C+1052+BA+Amsterdam"
+      }
+    },
+    {
+      "id": "2026-12-02",
+      "title": "Kamercirkel: Open podium voor kamermuziek",
+      "date": "2026-12-02",
+      "start_time": "20:30",
+      "end_time": "22:00",
+      "timezone": "Europe/Amsterdam",
+      "price": 5,
+      "max_tickets_per_order": 10,
+      "location": {
+        "name": "Zaal 100",
+        "address": "De Wittenstraat 100",
+        "postal_code": "1052 BA",
+        "city": "Amsterdam",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Wittenstraat+100%2C+1052+BA+Amsterdam"
+      }
+    }
+  ]
+}
