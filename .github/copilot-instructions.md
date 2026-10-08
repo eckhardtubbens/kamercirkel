@@ -39,7 +39,9 @@ Preserve the existing lightweight architecture:
 
 Keep responsibilities separated:
 
-- `site.yaml` = editable content and event configuration
+- `site.yaml` = editable site copy, general event copy and registration
+- `ticket-events.yaml` = editable event dates, ticket details and programmes
+- `ticket-events.json` = generated public feed for the ticketing web app; do not edit manually
 - `build.py` = data loading, formatting and build logic
 - `templates/` = HTML structure and Jinja presentation logic
 - `css/style.css` = visual design and responsive layout
@@ -68,7 +70,14 @@ Examples of content that belongs in `site.yaml`:
 - event texts
 - registration URL
 - social links
-- programme data, when programme data is stored locally
+- general event copy and programme disclaimer
+
+Concert-specific data and programmes belong in the corresponding event record
+in `ticket-events.yaml`. The build automatically selects the earliest event
+dated today or later in `Europe/Amsterdam`; do not add a manually maintained
+active event ID to `site.yaml`. `build.py` generates the public
+`ticket-events.json` feed for Apps Script; never edit that generated file
+directly.
 
 ## Visual changes
 

@@ -1,6 +1,7 @@
 from pathlib import Path
 from datetime import date, datetime
 import json
+from copy import deepcopy
 from urllib.parse import urljoin
 from zoneinfo import ZoneInfo
 
@@ -20,7 +21,8 @@ TEMPLATE_DIR = ROOT / "templates"
 OUTPUT_FILE = ROOT / "index.html"
 ROBOTS_FILE = ROOT / "robots.txt"
 SITEMAP_FILE = ROOT / "sitemap.xml"
-TICKET_EVENTS_FILE = ROOT / "ticket-events.json"
+TICKET_EVENTS_FILE = ROOT / "ticket-events.yaml"
+TICKET_EVENTS_JSON_FILE = ROOT / "ticket-events.json"
 
 
 # --------------------------------------------------
@@ -79,6 +81,12 @@ def format_date(date_value):
     }
 
 
+def json_default(value):
+    if isinstance(value, (date, datetime)):
+        return value.isoformat()
+    raise TypeError(f"Niet JSON-serialiseerbare waarde: {value!r}")
+
+
 # --------------------------------------------------
 # Load YAML
 # --------------------------------------------------
@@ -92,18 +100,23 @@ with open(SITE_FILE, "r", encoding="utf-8") as file:
 # --------------------------------------------------
 
 with open(TICKET_EVENTS_FILE, "r", encoding="utf-8") as file:
-    ticket_events_data = json.load(file)
+    ticket_events_data = yaml.safe_load(file)
+
+if not isinstance(ticket_events_data, dict):
+    raise ValueError("ticket-events.yaml moet een YAML-object bevatten.")
 
 ticket_events = ticket_events_data.get("events")
 payment_base_url = ticket_events_data.get("payment_base_url", "")
 
 if not isinstance(ticket_events, list) or not ticket_events:
-    raise ValueError("ticket-events.json moet een niet-lege events-lijst bevatten.")
+    raise ValueError("ticket-events.yaml moet een niet-lege events-lijst bevatten.")
 
 if not isinstance(payment_base_url, str) or not payment_base_url.startswith(
     "https://bunq.me/"
 ):
-    raise ValueError("ticket-events.json moet een geldige payment_base_url bevatten.")
+    raise ValueError("ticket-events.yaml moet een geldige payment_base_url bevatten.")
+
+public_ticket_events_data = deepcopy(ticket_events_data)
 
 seen_ticket_event_ids = set()
 
@@ -165,14 +178,37 @@ for ticket_event in ticket_events:
 
     ticket_event["payment_base_url"] = payment_base_url.rstrip("/")
 
-active_event_id = site["event"].pop("current_event_id", None)
-active_event = next(
-    (item for item in ticket_events if item["id"] == active_event_id),
-    None,
+today = datetime.now(ZoneInfo("Europe/Amsterdam")).date()
+upcoming_events = sorted(
+    (item for item in ticket_events if date.fromisoformat(item["date"]) >= today),
+    key=lambda item: item["date"],
 )
+active_event = upcoming_events[0] if upcoming_events else None
 
 if active_event is None:
-    raise ValueError("event.current_event_id moet verwijzen naar een concert in ticket-events.json.")
+    raise ValueError("ticket-events.yaml bevat geen concerten op of na vandaag.")
+
+for ticket_event in ticket_events:
+    programme = ticket_event.get("programme", [])
+    if not isinstance(programme, list):
+        raise ValueError(f"Het programma moet een lijst zijn voor {ticket_event['id']}.")
+    ticket_event["programme"] = programme
+
+ticket_events.sort(key=lambda item: item["date"])
+public_ticket_events_data["events"] = sorted(
+    public_ticket_events_data["events"],
+    key=lambda item: str(item["date"]),
+)
+
+with open(TICKET_EVENTS_JSON_FILE, "w", encoding="utf-8") as file:
+    json.dump(
+        public_ticket_events_data,
+        file,
+        ensure_ascii=False,
+        indent=2,
+        default=json_default,
+    )
+    file.write("\n")
 
 for field in (
     "title",
@@ -185,6 +221,7 @@ for field in (
     "end_datetime",
     "location",
     "price",
+    "programme",
 ):
     site["event"][field] = active_event[field]
 
@@ -193,6 +230,7 @@ site["event"]["price_label"] = (
 )
 site["event"]["price_value"] = active_event["price"]
 site["ticket_events"] = ticket_events
+site["upcoming_events"] = upcoming_events
 
 # --------------------------------------------------
 # Derived site information
@@ -276,6 +314,7 @@ if site_url:
     print(f"Robots:    {ROBOTS_FILE}")
     print(f"Sitemap:   {SITEMAP_FILE}")
     print(f"Ticketbron: {TICKET_EVENTS_FILE}")
+    print(f"Ticketfeed: {TICKET_EVENTS_JSON_FILE}")
 else:
     print("Robots.txt gegenereerd.")
     print("Sitemap wordt pas gegenereerd zodra site.url is ingevuld.")

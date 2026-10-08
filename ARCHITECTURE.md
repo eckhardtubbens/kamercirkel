@@ -30,17 +30,14 @@ The website is not intended to be a complex web application. It is a lightweight
 The core architecture is:
 
 ```text
-              site.yaml       ticket-events.json
+              site.yaml       ticket-events.yaml
                    \               /
                     \             /
                      ▼           ▼
-                        build.py
-                           │
-                           ▼
-                  Jinja2 template
-                           │
-                           ▼
-                generated static HTML
+                                                build.py
+                                            /        \
+                                           ▼          ▼
+                         generated HTML   generated JSON
                        │
                        ▼
                 GitHub Actions
@@ -56,10 +53,13 @@ The main principle is separation of responsibilities:
 
 ```text
 site.yaml
-      = site copy, programme, registration and active concert ID
+      = site copy, general event copy and registration
+
+ticket-events.yaml
+      = editable concert dates, times, locations, prices, programmes and bunq payment links
 
 ticket-events.json
-      = concert dates, times, locations, prices and bunq payment links
+      = generated public feed for the ticketing web app; do not edit manually
 
 build.py
       = data loading, validation, formatting and build logic
@@ -197,7 +197,13 @@ social:
   whatsapp: "..."
 ```
 
-The exact current schema should always be checked against the actual `site.yaml`.
+The exact current schema should always be checked against the actual YAML files.
+The active concert is derived during the build from `ticket-events.yaml`: it is
+the event with the earliest date that is today or later in the
+`Europe/Amsterdam` timezone. The programme belongs to each event record there,
+so the site automatically switches both event details and programme after a
+concert date has passed. If there are no upcoming events, the build fails rather
+than publishing an expired event.
 
 ### Principle
 
@@ -355,27 +361,16 @@ The concept should communicate that ensembles with substantial musical experienc
 
 ---
 
-## 10. Current event
+## 10. Active event
 
-The first open podium is currently configured for:
-
-```text
-Date:
-1 September 2026
-
-Location:
-Zaal 100
-De Wittenstraat 100
-1052 BA Amsterdam
-
-Price:
-€5
-
-Feature:
-The large hall contains a grand piano.
-```
-
-The exact event date, times, price and copy must be taken from `site.yaml` rather than assumed from this document.
+The active event is selected automatically at build time from `ticket-events.yaml`.
+It is the earliest event dated today or later in the `Europe/Amsterdam` timezone.
+Event-specific programme entries are stored on each event record; an event
+without a programme displays the existing "programma wordt binnenkort
+bekendgemaakt" message. GitHub Actions rebuilds and deploys the site daily at
+00:15 UTC as well as on pushes to `main`, so the next event is published after
+the previous date passes without a manual content change. The build fails if no
+future event is configured.
 
 ---
 
@@ -488,16 +483,13 @@ The website should not hard-code the form URL.
 
 The purchase link is configured as `event.tickets.sales_url` in `site.yaml` and
 points to the deployed Google Apps Script web app in `ticketing/`.
-`ticket-events.json` is the editable source of all concert-specific data used by
-the site and ticket flow, including dates, times, locations, prices and the
-bunq.me payment base URL. The ticket flow appends the calculated order total to
-that base URL. `site.yaml` contains `event.current_event_id` to select the
-concert featured on the home page, plus site copy and programme information.
-`build.py` reads and validates the JSON source without rewriting it. The web
-app reads the same public file to populate the concert selector and calculate
-the order. It collects the buyer's name, e-mail, selected concert and quantity,
-records the order in a private Google Sheet, then presents the matching bunq
-payment link.
+`ticket-events.yaml` is the editable source of all concert-specific data used by
+the site and ticket flow, including dates, times, locations, prices, programmes
+and the bunq.me payment base URL. `build.py` reads and validates this YAML and
+generates the public `ticket-events.json` feed consumed by the web app. The web
+app uses that feed to populate the concert selector and calculate the order. It
+collects the buyer's name, e-mail, selected concert and quantity, records the
+order in a private Google Sheet, then presents the matching bunq payment link.
 
 The web app stores each order as `Nog te controleren`. It does not verify bunq
 payments, so an organizer must compare the payment in bunq and mark the row
@@ -507,10 +499,11 @@ URL and the concert price multiplied by the selected quantity.
 
 The Google Sheet contains personal data. Keep it private, restrict access to
 organizers and remove records when no longer needed. Only `SPREADSHEET_ID` is
-kept in Apps Script properties; do not put it in public `ticket-events.json`.
-Edit and publish `ticket-events.json` whenever concert details change; rebuild
-the site so the featured concert and agenda stay synchronized. Apps Script
-deployment and configuration are documented in `ticketing/README.md`.
+kept in Apps Script properties; do not put it in public `ticket-events.yaml` or
+the generated `ticket-events.json`. Edit `ticket-events.yaml` whenever concert
+details change; rebuild the site so the generated feed, featured concert and
+agenda stay synchronized. Apps Script deployment and configuration are
+documented in `ticketing/README.md`.
 
 ## 15. Google Forms and Google Sheets
 

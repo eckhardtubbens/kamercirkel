@@ -1,9 +1,10 @@
 # Ticketverkoop instellen
 
 De ticketflow gebruikt een Google Apps Script-webapp en een Google Sheet.
-`ticket-events.json` is de centrale bron voor alle concerten, inclusief datum,
-tijden, locatie, prijs en één bunq.me-basislink. `build.py` leest en valideert
-dit bestand, maar overschrijft het niet. De webapp slaat de bestelling met
+`ticket-events.yaml` is de bewerkbare bron voor alle concerten, inclusief datum,
+tijden, locatie, prijs, programma en één bunq.me-basislink. `build.py` leest en
+valideert dit bestand en genereert daaruit de openbare `ticket-events.json`-feed
+voor de webapp. Pas de JSON-feed niet handmatig aan. De webapp slaat de bestelling met
 gekozen concert op en maakt de betaal-URL dynamisch op basis van het totaal.
 Bijvoorbeeld: basis-URL `https://bunq.me/kamercirkel` plus totaal `20` wordt
 `https://bunq.me/kamercirkel/20`. De betaalstatus wordt niet
@@ -32,18 +33,16 @@ opent de ticketwebapp met de betreffende concertdatum vooraf geselecteerd.
    | `SPREADSHEET_ID` | ID uit de URL van de Google Sheet |
 
     De Sheet-ID blijft als enige property privé in Apps Script. Zet deze niet in
-    `site.yaml` of `ticket-events.json`: dat JSON-bestand wordt openbaar
-    gepubliceerd. De bunq-basislink staat centraal bovenaan
-    `ticket-events.json`:
+    `site.yaml` of `ticket-events.yaml`: de configuratie en gegenereerde JSON-feed
+    worden openbaar gepubliceerd. De bunq-basislink staat centraal bovenaan
+    `ticket-events.yaml`:
 
-   ```json
-    {
-       "payment_base_url": "https://bunq.me/kamercirkel",
-       "events": []
-    }
+   ```yaml
+   payment_base_url: "https://bunq.me/kamercirkel"
+   events: []
    ```
 
-    Beheer concerten in de `events`-lijst van `ticket-events.json` en stel daar
+    Beheer concerten in de `events`-lijst van `ticket-events.yaml` en stel daar
     per concert `price` in. Het formulier berekent het totaal als prijs maal
    aantal kaartjes en gebruikt dat bedrag achter de basislink. Stel ook
    `max_tickets_per_order` in; dat bepaalt de aantalselectie en wordt server-side
@@ -54,9 +53,8 @@ opent de ticketwebapp met de betreffende concertdatum vooraf geselecteerd.
    op **Anyone**. Geef de Sheet niet publiek toegankelijk; alleen de webapp
    schrijft erin.
 6. Kopieer de `/exec`-URL van de webapp naar `event.tickets.sales_url` in
-   `site.yaml`. Stel `event.current_event_id` in op het ID van de editie die op
-   de homepage moet staan. Voer `python build.py` uit en publiceer de site samen
-   met `ticket-events.json`; het Apps Script haalt concerten, prijzen en
+   `site.yaml`. Voer `python build.py` uit en publiceer de site samen met de
+   gegenereerde `ticket-events.json`; het Apps Script haalt concerten, prijzen en
    bunq-links op via `https://kamercirkel.nl/ticket-events.json`.
 7. Bij het eerste gebruik autoriseer je de Apps Script-toegang tot externe URL's
    wanneer Google daarom vraagt.

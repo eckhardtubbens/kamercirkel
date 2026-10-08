@@ -432,8 +432,8 @@
 
             <div class="upcoming-events-list">
 
-                {% set paid_upcoming_events = ticket_events[:4] | selectattr("price", "gt", 0) | list %}
-                {% for upcoming_event in ticket_events[:4] %}
+                {% set paid_upcoming_events = upcoming_events[:4] | selectattr("price", "gt", 0) | list %}
+                {% for upcoming_event in upcoming_events[:4] %}
                 <div class="upcoming-event">
                     <div class="upcoming-event-date">
                         <strong>{{ upcoming_event.date_formatted.day }} {{ upcoming_event.date_formatted.month }}</strong>
