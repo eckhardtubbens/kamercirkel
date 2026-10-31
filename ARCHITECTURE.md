@@ -53,10 +53,10 @@ The main principle is separation of responsibilities:
 
 ```text
 site.yaml
-      = site copy, general event copy and registration
+      = site copy, general event copy, shared event title/timezone/location and registration
 
 ticket-events.yaml
-      = editable concert dates, times, locations, prices, programmes and bunq payment links
+      = editable concert dates, times, prices, programmes and bunq payment links
 
 ticket-events.json
       = generated public feed for the ticketing web app; do not edit manually
@@ -170,6 +170,7 @@ site:
 
 event:
   title: "Open podium voor kamermuziek"
+      timezone: "Europe/Amsterdam"
   date: "2026-09-01"
 
   start_datetime: "2026-09-01T19:00:00+02:00"
@@ -364,7 +365,10 @@ The concept should communicate that ensembles with substantial musical experienc
 ## 10. Active event
 
 The active event is selected automatically at build time from `ticket-events.yaml`.
-It is the earliest event dated today or later in the `Europe/Amsterdam` timezone.
+Each event is identified by its date; the build derives the `id` required by the
+ticketing app. The shared title, timezone and location are configured once in
+`site.yaml` and added to each event in the generated ticket feed. The active
+event is the earliest event dated today or later in the configured event timezone.
 Event-specific programme entries are stored on each event record; an event
 without a programme displays the existing "programma wordt binnenkort
 bekendgemaakt" message. GitHub Actions rebuilds and deploys the site daily at

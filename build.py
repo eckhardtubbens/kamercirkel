@@ -114,6 +114,11 @@ if not isinstance(ticket_events, list) or not ticket_events:
 if not isinstance(payment_links, dict) or not payment_links:
     raise ValueError("ticket-events.yaml moet payment_links met vaste betaalbedragen bevatten.")
 
+shared_event_fields = site.get("event", {})
+for field in ("title", "timezone", "location"):
+    if not shared_event_fields.get(field):
+        raise ValueError(f"site.yaml moet event.{field} bevatten.")
+
 for amount, payment_url in payment_links.items():
     parsed_payment_url = urlsplit(str(payment_url))
     if (
@@ -135,15 +140,11 @@ seen_ticket_event_ids = set()
 
 for ticket_event in ticket_events:
     required_fields = (
-        "id",
-        "title",
         "date",
         "start_time",
         "end_time",
-        "timezone",
         "price",
         "max_tickets_per_order",
-        "location",
     )
     missing_fields = [field for field in required_fields if field not in ticket_event]
 
@@ -155,9 +156,13 @@ for ticket_event in ticket_events:
     event_date = date.fromisoformat(str(ticket_event["date"]))
     event_id = event_date.isoformat()
 
-    if ticket_event["id"] != event_id or event_id in seen_ticket_event_ids:
-        raise ValueError(f"Concert-ID ontbreekt, wijkt af van de datum of is dubbel: {event_id}.")
+    if event_id in seen_ticket_event_ids:
+        raise ValueError(f"De concertdatum is dubbel: {event_id}.")
 
+    ticket_event["id"] = event_id
+    ticket_event["title"] = shared_event_fields["title"]
+    ticket_event["timezone"] = shared_event_fields["timezone"]
+    ticket_event["location"] = deepcopy(shared_event_fields["location"])
     seen_ticket_event_ids.add(event_id)
     ticket_event["date_formatted"] = format_date(event_date)
     ticket_event["date_label"] = ticket_event["date_formatted"]["full"]
@@ -189,7 +194,7 @@ for ticket_event in ticket_events:
         )
         ticket_event[datetime_key] = event_datetime.isoformat()
 
-today = datetime.now(ZoneInfo("Europe/Amsterdam")).date()
+today = datetime.now(ZoneInfo(shared_event_fields["timezone"])).date()
 upcoming_events = sorted(
     (item for item in ticket_events if date.fromisoformat(item["date"]) >= today),
     key=lambda item: item["date"],
@@ -200,14 +205,21 @@ if active_event is None:
     raise ValueError("ticket-events.yaml bevat geen concerten op of na vandaag.")
 
 for ticket_event in ticket_events:
-    programme = ticket_event.get("programme", [])
+    programme = ticket_event.get("programme") or []
     if not isinstance(programme, list):
         raise ValueError(f"Het programma moet een lijst zijn voor {ticket_event['id']}.")
     ticket_event["programme"] = programme
 
 ticket_events.sort(key=lambda item: item["date"])
 public_ticket_events_data["events"] = sorted(
-    public_ticket_events_data["events"],
+    [
+        {
+            key: value
+            for key, value in ticket_event.items()
+            if key not in ("date_formatted", "date_label", "label", "start_datetime", "end_datetime")
+        }
+        for ticket_event in ticket_events
+    ],
     key=lambda item: str(item["date"]),
 )
 
