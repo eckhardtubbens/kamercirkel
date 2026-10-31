@@ -41,10 +41,10 @@ a {
 }
 
 .header-logo {
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
-    mix-blend-mode: multiply;
+    width: 88px;
+    height: 88px;
+    flex: 0 0 auto;
+    object-fit: contain;
 }
 
 .logo {
@@ -547,11 +547,10 @@ h2 {
 
 .initiative-logo {
     display: block;
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     margin-bottom: 0.75rem;
-    object-fit: cover;
-    mix-blend-mode: multiply;
+    object-fit: contain;
 }
 
 .footer-links {
@@ -573,6 +572,107 @@ h2 {
 
 
 /* --------------------------------
+   COLOR DIRECTION
+-------------------------------- */
+
+:root {
+    --cobalt: #073BFF;
+    --neon: #F5FF00;
+    --pink: #FF0A78;
+    --white: #FFFFFF;
+}
+
+body {
+    background: var(--cobalt);
+    color: var(--white);
+}
+
+.header,
+.footer,
+main section,
+.concept,
+.programme-list,
+.programme-item,
+.upcoming-events-list,
+.upcoming-event,
+.rules,
+.rules div {
+    border-color: var(--pink);
+}
+
+.hero h1,
+h2,
+.eyebrow,
+.label,
+.date-day,
+.date-month,
+.date-year,
+.section-number {
+    color: var(--neon);
+}
+
+.hero h1::after {
+    display: block;
+    width: 5rem;
+    height: 0.45rem;
+    margin-top: 2rem;
+    background: var(--pink);
+    content: "";
+}
+
+.ticket-link {
+    border-color: var(--neon);
+    background: var(--neon);
+    color: var(--cobalt);
+}
+
+.ticket-link:hover {
+    border-color: var(--pink);
+    background: var(--neon);
+    color: var(--cobalt);
+}
+
+.ticket-link span {
+    color: var(--pink);
+}
+
+.programme-disclaimer,
+.programme-details,
+.programme-duration,
+.programme-empty,
+.upcoming-event span,
+.footer-tagline {
+    opacity: 0.82;
+}
+
+.registration-link,
+.location-link {
+    border-color: var(--neon);
+}
+
+.play {
+    background: var(--neon);
+    color: var(--cobalt);
+}
+
+.play h2,
+.play .eyebrow,
+.play .section-number {
+    color: var(--cobalt);
+}
+
+.play .rules,
+.play .rules div,
+.play .registration-link {
+    border-color: var(--cobalt);
+}
+
+.play .registration-link span {
+    color: var(--pink);
+}
+
+
+/* --------------------------------
    MOBILE
 -------------------------------- */
 
@@ -584,6 +684,11 @@ h2 {
 
     .edition {
         font-size: 0.65rem;
+    }
+
+    .header-logo {
+        width: 72px;
+        height: 72px;
     }
 
     section {
@@ -598,7 +703,7 @@ h2 {
     }
 
     .hero h1 {
-        font-size: clamp(3.6rem, 18vw, 6rem);
+        font-size: clamp(2.8rem, 14vw, 5rem);
         line-height: 0.86;
     }
 
