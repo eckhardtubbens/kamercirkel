@@ -53,7 +53,7 @@ The main principle is separation of responsibilities:
 
 ```text
 site.yaml
-      = site copy, general event copy, shared event title/timezone/location and registration
+      = site copy, general event copy, shared event title/timezone/location/ticket limit and registration
 
 ticket-events.yaml
       = editable concert dates, times, prices, programmes and bunq payment links
@@ -171,6 +171,7 @@ site:
 event:
   title: "Open podium voor kamermuziek"
       timezone: "Europe/Amsterdam"
+      max_tickets_per_order: 10
   date: "2026-09-01"
 
   start_datetime: "2026-09-01T19:00:00+02:00"

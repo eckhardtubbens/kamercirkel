@@ -8,31 +8,26 @@ events:
     start_time: "20:00"
     end_time: "22:00"
     price: 0
-    max_tickets_per_order: 10
 
   - date: "2027-04-07"
     start_time: "20:00"
     end_time: "22:00"
     price: 0
-    max_tickets_per_order: 10
 
   - date: "2027-03-03"
     start_time: "20:00"
     end_time: "22:00"
     price: 0
-    max_tickets_per_order: 10
 
   - date: "2027-02-03"
     start_time: "20:00"
     end_time: "22:00"
     price: 0
-    max_tickets_per_order: 10
 
   - date: "2026-11-04"
     start_time: "20:00"
     end_time: "22:00"
     price: 0
-    max_tickets_per_order: 10
     programme:
       - composer: "J. S. Bach"
         piece: "Prelude uit cellosuite nr. 4"
@@ -46,13 +41,11 @@ events:
     start_time: "20:30"
     end_time: "22:00"
     price: 0
-    max_tickets_per_order: 10
 
   - date: "2026-10-07"
     start_time: "20:30"
     end_time: "22:00"
     price: 0
-    max_tickets_per_order: 10
     programme:
       - composer: "Beethoven"
         piece: "Piano Trio in C klein, Op.1 No.3"

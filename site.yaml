@@ -15,6 +15,7 @@ site:
 event:
   title: "Kamercirkel: Open podium voor kamermuziek"
   timezone: "Europe/Amsterdam"
+  max_tickets_per_order: 10
 
   location:
     name: "Zaal 100"

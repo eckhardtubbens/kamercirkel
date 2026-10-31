@@ -115,9 +115,13 @@ if not isinstance(payment_links, dict) or not payment_links:
     raise ValueError("ticket-events.yaml moet payment_links met vaste betaalbedragen bevatten.")
 
 shared_event_fields = site.get("event", {})
-for field in ("title", "timezone", "location"):
+for field in ("title", "timezone", "location", "max_tickets_per_order"):
     if not shared_event_fields.get(field):
         raise ValueError(f"site.yaml moet event.{field} bevatten.")
+
+max_tickets_per_order = shared_event_fields["max_tickets_per_order"]
+if not isinstance(max_tickets_per_order, int) or max_tickets_per_order <= 0:
+    raise ValueError("event.max_tickets_per_order in site.yaml moet positief zijn.")
 
 for amount, payment_url in payment_links.items():
     parsed_payment_url = urlsplit(str(payment_url))
@@ -144,7 +148,6 @@ for ticket_event in ticket_events:
         "start_time",
         "end_time",
         "price",
-        "max_tickets_per_order",
     )
     missing_fields = [field for field in required_fields if field not in ticket_event]
 
@@ -163,6 +166,7 @@ for ticket_event in ticket_events:
     ticket_event["title"] = shared_event_fields["title"]
     ticket_event["timezone"] = shared_event_fields["timezone"]
     ticket_event["location"] = deepcopy(shared_event_fields["location"])
+    ticket_event["max_tickets_per_order"] = max_tickets_per_order
     seen_ticket_event_ids.add(event_id)
     ticket_event["date_formatted"] = format_date(event_date)
     ticket_event["date_label"] = ticket_event["date_formatted"]["full"]
@@ -172,12 +176,6 @@ for ticket_event in ticket_events:
 
     if not isinstance(ticket_event["price"], (int, float)) or ticket_event["price"] < 0:
         raise ValueError(f"Ticketprijs mag niet negatief zijn voor {event_id}.")
-
-    if (
-        not isinstance(ticket_event["max_tickets_per_order"], int)
-        or ticket_event["max_tickets_per_order"] <= 0
-    ):
-        raise ValueError(f"max_tickets_per_order moet positief zijn voor {event_id}.")
 
     for time_key in ("start_time", "end_time"):
         datetime.strptime(ticket_event[time_key], "%H:%M")
@@ -249,7 +247,7 @@ for field in (
     site["event"][field] = active_event[field]
 
 site["event"]["price_label"] = (
-    "gratis" if active_event["price"] == 0 else str(active_event["price"])
+    "vrije bijdrage" if active_event["price"] == 0 else str(active_event["price"])
 )
 site["event"]["price_value"] = active_event["price"]
 site["ticket_events"] = ticket_events
