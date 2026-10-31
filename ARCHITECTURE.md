@@ -483,9 +483,9 @@ The website should not hard-code the form URL.
 
 The purchase link is configured as `event.tickets.sales_url` in `site.yaml` and
 points to the deployed Google Apps Script web app in `ticketing/`.
-`ticket-events.yaml` is the editable source of all concert-specific data used by
+ticket-events.yaml` is the editable source of all concert-specific data used by
 the site and ticket flow, including dates, times, locations, prices, programmes
-and the bunq.me payment base URL. `build.py` reads and validates this YAML and
+and fixed bunq.me payment links keyed by amount. `build.py` reads and validates this YAML and
 generates the public `ticket-events.json` feed consumed by the web app. The web
 app uses that feed to populate the concert selector and calculate the order. It
 collects the buyer's name, e-mail, selected concert and quantity, records the
@@ -494,8 +494,9 @@ order in a private Google Sheet, then presents the matching bunq payment link.
 The web app stores each order as `Nog te controleren`. It does not verify bunq
 payments, so an organizer must compare the payment in bunq and mark the row
 `Betaald` before admitting the buyer. A successful return from bunq is not
-payment confirmation. The dynamic bunq.me URL is built from the configured base
-URL and the concert price multiplied by the selected quantity.
+payment confirmation. The web app looks up a fixed bunq.me URL using the concert
+price multiplied by the selected quantity; the form only offers quantities for
+which a matching payment link is configured.
 
 The Google Sheet contains personal data. Keep it private, restrict access to
 organizers and remove records when no longer needed. Only `SPREADSHEET_ID` is

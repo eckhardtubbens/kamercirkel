@@ -2,12 +2,12 @@
 
 De ticketflow gebruikt een Google Apps Script-webapp en een Google Sheet.
 `ticket-events.yaml` is de bewerkbare bron voor alle concerten, inclusief datum,
-tijden, locatie, prijs, programma en één bunq.me-basislink. `build.py` leest en
-valideert dit bestand en genereert daaruit de openbare `ticket-events.json`-feed
-voor de webapp. Pas de JSON-feed niet handmatig aan. De webapp slaat de bestelling met
-gekozen concert op en maakt de betaal-URL dynamisch op basis van het totaal.
-Bijvoorbeeld: basis-URL `https://bunq.me/kamercirkel` plus totaal `20` wordt
-`https://bunq.me/kamercirkel/20`. De betaalstatus wordt niet
+tijden, locatie, prijs, programma en de vaste bunq.me-betaallinks per bedrag.
+`build.py` leest en valideert dit bestand en genereert daaruit de openbare
+`ticket-events.json`-feed voor de webapp. Pas de JSON-feed niet handmatig aan.
+De webapp slaat de bestelling met gekozen concert op en gebruikt de vaste
+betaallink die exact bij het totaalbedrag hoort. Alleen aantallen waarvoor zo'n
+link bestaat zijn beschikbaar. De betaalstatus wordt niet
 automatisch door bunq teruggekoppeld; controleer de betaling in bunq en wijzig
 daarna de status in de Sheet. Na klikken op **Afrekenen** wordt de order
 opgeslagen en opent bunq direct in een nieuw tabblad. Als opslaan mislukt,
@@ -32,22 +32,23 @@ opent de ticketwebapp met de betreffende concertdatum vooraf geselecteerd.
    | --- | --- |
    | `SPREADSHEET_ID` | ID uit de URL van de Google Sheet |
 
-    De Sheet-ID blijft als enige property privé in Apps Script. Zet deze niet in
-    `site.yaml` of `ticket-events.yaml`: de configuratie en gegenereerde JSON-feed
-    worden openbaar gepubliceerd. De bunq-basislink staat centraal bovenaan
-    `ticket-events.yaml`:
+      De Sheet-ID blijft als enige property privé in Apps Script. Zet deze niet in
+      `site.yaml` of `ticket-events.yaml`: de configuratie en gegenereerde JSON-feed
+      worden openbaar gepubliceerd. De vaste betaal-links staan centraal bovenaan
+      `ticket-events.yaml`:
 
    ```yaml
-   payment_base_url: "https://bunq.me/kamercirkel"
+    payment_links:
+       "5": "https://bunq.me/o/3Em73UUIwcT5KUWvYPsZct"
+       "10": "https://bunq.me/o/5qR7MGaIoLSKsGJCCZ8FQc"
    events: []
    ```
 
-    Beheer concerten in de `events`-lijst van `ticket-events.yaml` en stel daar
-    per concert `price` in. Het formulier berekent het totaal als prijs maal
-   aantal kaartjes en gebruikt dat bedrag achter de basislink. Stel ook
-   `max_tickets_per_order` in; dat bepaalt de aantalselectie en wordt server-side
-   gecontroleerd. Controleer dat je bunq.me-account dynamische bedraglinks met
-   dit URL-patroon ondersteunt.
+      Beheer concerten in de `events`-lijst van `ticket-events.yaml` en stel daar
+      per concert `price` in. Het formulier berekent het totaal als prijs maal
+      aantal kaartjes en toont alleen aantallen waarvoor een vaste betaal-link is
+      geconfigureerd. Stel ook `max_tickets_per_order` in; dat bepaalt de maximale
+      aantalselectie en wordt server-side gecontroleerd.
 
 5. Deploy het project als **Web app**, kies **Execute as me** en stel toegang in
    op **Anyone**. Geef de Sheet niet publiek toegankelijk; alleen de webapp

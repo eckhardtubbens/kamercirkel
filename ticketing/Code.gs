@@ -71,10 +71,10 @@ function submitTicketOrder(form) {
 
   const orderId = Utilities.getUuid().toUpperCase();
   const total = Math.round(selectedEvent.price * quantity * 100) / 100;
-  const paymentUrl = selectedEvent.payment_base_url + "/" + formatPaymentAmount_(total);
+  const paymentUrl = selectedEvent.payment_links[formatPaymentAmount_(total)];
 
   if (!isValidBunqUrl_(paymentUrl)) {
-    throw new Error("De bunq-betaallink voor dit concert is ongeldig.");
+    throw new Error("Voor dit totaalbedrag is geen bunq-betaallink beschikbaar.");
   }
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
@@ -221,8 +221,25 @@ function getTicketEvents_() {
     throw new Error("De concertlijst van de website is ongeldig.");
   }
 
-  if (!/^https:\/\/bunq\.me\/[a-z0-9_-]+$/i.test(eventData.payment_base_url || "")) {
-    throw new Error("De dynamische bunq-betaallink is niet goed ingesteld.");
+  if (
+    !eventData.payment_links ||
+    typeof eventData.payment_links !== "object" ||
+    Array.isArray(eventData.payment_links)
+  ) {
+    throw new Error("De vaste bunq-betaallinks zijn niet goed ingesteld.");
+  }
+
+  Object.keys(eventData.payment_links).forEach(function (amount) {
+    if (
+      !/^\d+(?:\.\d{1,2})?$/.test(amount) ||
+      !isValidBunqUrl_(eventData.payment_links[amount])
+    ) {
+      throw new Error("Een vaste bunq-betaallink is ongeldig.");
+    }
+  });
+
+  if (Object.keys(eventData.payment_links).length === 0) {
+    throw new Error("Er zijn geen vaste bunq-betaallinks ingesteld.");
   }
 
   return eventData.events.filter(function (ticketEvent) {
@@ -249,7 +266,7 @@ function getTicketEvents_() {
     return Object.assign({}, ticketEvent, {
       date_label: dateLabel,
       label: dateLabel + " · " + ticketEvent.location.name,
-      payment_base_url: eventData.payment_base_url,
+      payment_links: eventData.payment_links,
     });
   });
 }

@@ -1,4 +1,6 @@
-payment_base_url: "https://bunq.me/kamercirkel"
+payment_links:
+  "5": "https://bunq.me/o/3Em73UUIwcT5KUWvYPsZct"
+  "10": "https://bunq.me/o/5qR7MGaIoLSKsGJCCZ8FQc"
 
 events:
   - id: "2026-11-04"
@@ -10,8 +12,14 @@ events:
     price: 0
     max_tickets_per_order: 10
     programme:
-      - composer: "Debussy"
-        piece: "Viool sonate in G klein, L.140"
+      - composer: "J. S. Bach"
+        piece: "Prelude uit cellosuite nr. 4"
+      - composer: "A. Dvořák"
+        piece: "Selectie uit de Sonatine voor viool en piano"
+      - composer: "L. van Beethoven"
+        piece: "Vioolsonate nr. 1 in D groot, op. 12 nr. 1, deel 1: Allegro con brio"
+      - composer: "C. Debussy"
+        piece: "Vioolsonate in g klein, L. 140"
     location:
       name: "Zaal 100"
       address: "De Wittenstraat 100"

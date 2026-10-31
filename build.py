@@ -2,7 +2,7 @@ from pathlib import Path
 from datetime import date, datetime
 import json
 from copy import deepcopy
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 from zoneinfo import ZoneInfo
 
 import yaml
@@ -106,17 +106,30 @@ if not isinstance(ticket_events_data, dict):
     raise ValueError("ticket-events.yaml moet een YAML-object bevatten.")
 
 ticket_events = ticket_events_data.get("events")
-payment_base_url = ticket_events_data.get("payment_base_url", "")
+payment_links = ticket_events_data.get("payment_links")
 
 if not isinstance(ticket_events, list) or not ticket_events:
     raise ValueError("ticket-events.yaml moet een niet-lege events-lijst bevatten.")
 
-if not isinstance(payment_base_url, str) or not payment_base_url.startswith(
-    "https://bunq.me/"
-):
-    raise ValueError("ticket-events.yaml moet een geldige payment_base_url bevatten.")
+if not isinstance(payment_links, dict) or not payment_links:
+    raise ValueError("ticket-events.yaml moet payment_links met vaste betaalbedragen bevatten.")
+
+for amount, payment_url in payment_links.items():
+    parsed_payment_url = urlsplit(str(payment_url))
+    if (
+        not str(amount).replace(".", "", 1).isdigit()
+        or float(amount) <= 0
+        or parsed_payment_url.scheme != "https"
+        or parsed_payment_url.netloc.lower() != "bunq.me"
+        or not parsed_payment_url.path.startswith("/o/")
+        or parsed_payment_url.path == "/o/"
+    ):
+        raise ValueError(f"Ongeldige vaste bunq-betaallink voor bedrag {amount!r}.")
 
 public_ticket_events_data = deepcopy(ticket_events_data)
+public_ticket_events_data["payment_links"] = {
+    str(amount): payment_url for amount, payment_url in payment_links.items()
+}
 
 seen_ticket_event_ids = set()
 
@@ -175,8 +188,6 @@ for ticket_event in ticket_events:
             tzinfo=event_timezone,
         )
         ticket_event[datetime_key] = event_datetime.isoformat()
-
-    ticket_event["payment_base_url"] = payment_base_url.rstrip("/")
 
 today = datetime.now(ZoneInfo("Europe/Amsterdam")).date()
 upcoming_events = sorted(
